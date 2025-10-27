@@ -1,13 +1,27 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Hero from "@/components/Hero";
+import AuthForm from "@/components/AuthForm";
+import Packages from "@/components/Packages";
+import FAQ from "@/components/FAQ";
+import Contact from "@/components/Contact";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main className="min-h-screen">
+      <Hero />
+      <AuthForm />
+      <Packages />
+      <FAQ />
+      <Contact />
+      
+      <footer className="bg-muted/30 border-t py-8">
+        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
+          <p>© 2024 FranchiMatch - Consultoria de Franquias. Todos os direitos reservados.</p>
+          <p className="mt-2">
+            CNPJ: 00.000.000/0001-00 | Especialistas em franchising e negócio próprio
+          </p>
+        </div>
+      </footer>
+    </main>
   );
 };
 
