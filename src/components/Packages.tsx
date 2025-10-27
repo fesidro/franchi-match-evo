@@ -1,120 +1,161 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check } from "lucide-react";
+import { Target, Search, FileCheck, Rocket, ArrowRight } from "lucide-react";
 
 const packages = [
   {
-    name: "Essencial",
-    description: "Ideal para quem está começando a explorar o universo das franquias",
-    price: "R$ 1.997",
-    period: "Pacote único",
-    features: [
+    step: "01",
+    name: "PACOTE 1 - MATCH DAS FRANQUIAS",
+    title: "Descoberta e Perfil",
+    description: "Identifique as franquias que realmente combinam com você através de análise detalhada do seu perfil e objetivos",
+    icon: Target,
+    highlights: [
       "Análise de perfil empreendedor",
-      "Mapeamento de 10 franquias adequadas",
-      "Relatório detalhado de viabilidade",
-      "1 consultoria online (2h)",
-      "Suporte por 30 dias",
-    ],
-    popular: false,
+      "Match com franquias ideais",
+      "Relatório personalizado"
+    ]
   },
   {
-    name: "Premium",
-    description: "Acompanhamento completo para uma decisão segura e assertiva",
-    price: "R$ 4.997",
-    period: "Pacote completo",
-    features: [
-      "Tudo do plano Essencial",
-      "Análise financeira aprofundada",
-      "Visita técnica a 3 franquias (presencial)",
+    step: "02",
+    name: "PACOTE 2 - ANÁLISE E VALIDAÇÃO",
+    title: "Due Diligence Completa",
+    description: "Validação profunda das marcas selecionadas com análise financeira, jurídica e de mercado sem viés comercial",
+    icon: Search,
+    highlights: [
+      "Análise financeira independente",
+      "Validação de mercado",
+      "Entrevistas com franqueados"
+    ]
+  },
+  {
+    step: "03",
+    name: "PACOTE 3 - DECISÃO E NEGOCIAÇÃO",
+    title: "Escolha Estratégica",
+    description: "Suporte na decisão final e negociação assertiva para garantir as melhores condições do seu investimento",
+    icon: FileCheck,
+    highlights: [
+      "Apoio na decisão final",
       "Negociação assistida",
-      "3 consultorias especializadas",
-      "Suporte por 90 dias",
-      "Validação de contrato",
-    ],
-    popular: true,
+      "Revisão de contratos"
+    ]
   },
   {
-    name: "Elite",
-    description: "Assessoria completa do planejamento à abertura da sua franquia",
-    price: "R$ 9.997",
-    period: "Acompanhamento total",
-    features: [
-      "Tudo do plano Premium",
-      "Consultoria ilimitada por 12 meses",
-      "Acompanhamento na implantação",
-      "Consultoria pós-abertura (3 meses)",
-      "Análise de múltiplas unidades",
-      "Acesso prioritário a lançamentos",
-      "Network exclusivo de franqueados",
-      "Mentoria executiva",
-    ],
-    popular: false,
-  },
+    step: "04",
+    name: "PACOTE 4 - IMPLEMENTAÇÃO",
+    title: "Abertura e Operação",
+    description: "Acompanhamento completo na implantação da unidade e nos primeiros meses de operação para seu sucesso",
+    icon: Rocket,
+    highlights: [
+      "Suporte na implantação",
+      "Consultoria operacional",
+      "Mentoria inicial"
+    ]
+  }
 ];
 
 const Packages = () => {
   return (
-    <section id="packages" className="py-20 bg-background">
+    <section id="packages" className="py-20 bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto px-4">
+        {/* Header */}
         <div className="text-center mb-16 space-y-4">
-          <Badge variant="secondary" className="mb-2">Nossos Pacotes</Badge>
-          <h2 className="text-foreground">Escolha o Plano Ideal para Você</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Investimento com retorno garantido: nossa expertise a serviço do seu sucesso
+          <Badge variant="secondary" className="mb-2">Nossa Metodologia</Badge>
+          <h2 className="text-foreground">O Percurso Para a Franquia Certa</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Nosso compromisso é com você, investidor, não com o franqueador. Oferecemos uma análise 
+            isenta e focada no seu sucesso, guiando você da definição do perfil à validação da marca.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {packages.map((pkg) => (
-            <Card 
-              key={pkg.name} 
-              className={`relative flex flex-col transition-smooth hover:shadow-xl ${
-                pkg.popular ? 'border-primary shadow-primary scale-105' : ''
-              }`}
-            >
-              {pkg.popular && (
-                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-secondary text-secondary-foreground">
-                  Mais Popular
-                </Badge>
-              )}
-              
-              <CardHeader className="text-center pb-8">
-                <CardTitle className="text-2xl mb-2">{pkg.name}</CardTitle>
-                <CardDescription className="text-base">{pkg.description}</CardDescription>
-                <div className="pt-4">
-                  <div className="text-4xl font-bold text-primary">{pkg.price}</div>
-                  <div className="text-sm text-muted-foreground mt-1">{pkg.period}</div>
-                </div>
-              </CardHeader>
+        {/* Journey Timeline */}
+        <div className="max-w-6xl mx-auto space-y-8">
+          {packages.map((pkg, index) => {
+            const Icon = pkg.icon;
+            return (
+              <div 
+                key={pkg.name}
+                className="relative animate-fade-in"
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                {/* Timeline connector - hide for last item */}
+                {index < packages.length - 1 && (
+                  <div className="absolute left-8 top-24 w-0.5 h-full bg-gradient-to-b from-primary to-primary/20 hidden md:block" />
+                )}
+                
+                <Card className="relative overflow-hidden hover:shadow-xl transition-smooth border-2 hover:border-primary/50">
+                  <CardHeader>
+                    <div className="flex items-start gap-6">
+                      {/* Step Number and Icon */}
+                      <div className="flex-shrink-0">
+                        <div className="relative">
+                          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center shadow-primary">
+                            <Icon className="h-8 w-8 text-primary-foreground" />
+                          </div>
+                          <Badge 
+                            variant="secondary" 
+                            className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center p-0 font-bold"
+                          >
+                            {pkg.step}
+                          </Badge>
+                        </div>
+                      </div>
 
-              <CardContent className="flex-grow">
-                <ul className="space-y-3">
-                  {pkg.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-sm text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
+                      {/* Content */}
+                      <div className="flex-1 space-y-3">
+                        <div>
+                          <p className="text-sm font-semibold text-primary mb-1">{pkg.name}</p>
+                          <CardTitle className="text-2xl mb-2">{pkg.title}</CardTitle>
+                          <CardDescription className="text-base leading-relaxed">
+                            {pkg.description}
+                          </CardDescription>
+                        </div>
 
-              <CardFooter>
-                <Button 
-                  variant={pkg.popular ? "cta" : "hero"} 
-                  size="lg" 
-                  className="w-full"
-                >
-                  Escolher {pkg.name}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+                        {/* Highlights */}
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {pkg.highlights.map((highlight, idx) => (
+                            <Badge key={idx} variant="outline" className="text-xs">
+                              {highlight}
+                            </Badge>
+                          ))}
+                        </div>
+
+                        {/* CTA Button */}
+                        <div className="pt-4">
+                          <Button 
+                            variant="hero" 
+                            className="gap-2 group"
+                            asChild
+                          >
+                            <a href="#">
+                              Saiba Mais
+                              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </a>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </CardHeader>
+                </Card>
+              </div>
+            );
+          })}
         </div>
 
-        <p className="text-center text-sm text-muted-foreground mt-12 max-w-2xl mx-auto">
-          Todos os planos incluem garantia de satisfação. Não encontrou a franquia ideal? Devolvemos seu investimento.
-        </p>
+        {/* Bottom CTA */}
+        <div className="text-center mt-16 space-y-6">
+          <div className="max-w-2xl mx-auto space-y-3">
+            <h3 className="text-2xl font-bold text-foreground">Pronto para começar sua jornada?</h3>
+            <p className="text-muted-foreground">
+              Combine os pacotes de acordo com suas necessidades ou escolha a jornada completa 
+              para ter o suporte total da decisão à abertura.
+            </p>
+          </div>
+          <Button variant="cta" size="lg" className="gap-2">
+            Falar com Especialista
+            <ArrowRight className="h-5 w-5" />
+          </Button>
+        </div>
       </div>
     </section>
   );
