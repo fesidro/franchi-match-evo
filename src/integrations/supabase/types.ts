@@ -92,39 +92,84 @@ export type Database = {
       }
       franquias: {
         Row: {
+          ativo: boolean | null
+          contras: string[] | null
           created_at: string | null
           descricao: string | null
+          faturamento_medio_mensal: number | null
           id: string
+          idade_franquia_anos: number | null
           investimento_maximo: number | null
           investimento_minimo: number | null
+          investimento_total: number | null
           logo_url: string | null
+          nivel_dedicacao: string | null
+          nivel_satisfacao_franqueados: number | null
+          nivel_suporte_franquia: number | null
           nome: string
           payback_medio: number | null
+          payback_medio_meses: number | null
+          pros: string[] | null
+          qtd_unidades: number | null
+          royalties_percentual: number | null
           segmento: string
+          selo_excelencia_abf: boolean | null
+          subsegmento: string | null
+          taxa_franquia: number | null
           unidades_brasil: number | null
         }
         Insert: {
+          ativo?: boolean | null
+          contras?: string[] | null
           created_at?: string | null
           descricao?: string | null
+          faturamento_medio_mensal?: number | null
           id?: string
+          idade_franquia_anos?: number | null
           investimento_maximo?: number | null
           investimento_minimo?: number | null
+          investimento_total?: number | null
           logo_url?: string | null
+          nivel_dedicacao?: string | null
+          nivel_satisfacao_franqueados?: number | null
+          nivel_suporte_franquia?: number | null
           nome: string
           payback_medio?: number | null
+          payback_medio_meses?: number | null
+          pros?: string[] | null
+          qtd_unidades?: number | null
+          royalties_percentual?: number | null
           segmento: string
+          selo_excelencia_abf?: boolean | null
+          subsegmento?: string | null
+          taxa_franquia?: number | null
           unidades_brasil?: number | null
         }
         Update: {
+          ativo?: boolean | null
+          contras?: string[] | null
           created_at?: string | null
           descricao?: string | null
+          faturamento_medio_mensal?: number | null
           id?: string
+          idade_franquia_anos?: number | null
           investimento_maximo?: number | null
           investimento_minimo?: number | null
+          investimento_total?: number | null
           logo_url?: string | null
+          nivel_dedicacao?: string | null
+          nivel_satisfacao_franqueados?: number | null
+          nivel_suporte_franquia?: number | null
           nome?: string
           payback_medio?: number | null
+          payback_medio_meses?: number | null
+          pros?: string[] | null
+          qtd_unidades?: number | null
+          royalties_percentual?: number | null
           segmento?: string
+          selo_excelencia_abf?: boolean | null
+          subsegmento?: string | null
+          taxa_franquia?: number | null
           unidades_brasil?: number | null
         }
         Relationships: []

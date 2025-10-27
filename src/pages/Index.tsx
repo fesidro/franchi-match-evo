@@ -3,6 +3,7 @@ import AuthForm from "@/components/AuthForm";
 import Packages from "@/components/Packages";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -18,6 +19,11 @@ const Index = () => {
           <p>© 2024 FranchiMatch - Consultoria de Franquias. Todos os direitos reservados.</p>
           <p className="mt-2">
             CNPJ: 00.000.000/0001-00 | Especialistas em franchising e negócio próprio
+          </p>
+          <p className="mt-4">
+            <Link to="/admin/franquias" className="text-primary hover:underline">
+              Área Administrativa
+            </Link>
           </p>
         </div>
       </footer>
