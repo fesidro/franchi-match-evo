@@ -21,7 +21,7 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-6">
               <Button variant="hero" size="xl" className="group" asChild>
-                <Link to="/match">
+                <Link to="/auth">
                   Dê Match na sua Franquia Ideal
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>

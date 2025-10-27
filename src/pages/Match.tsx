@@ -1,94 +1,144 @@
+import { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, X, Info, Star, ArrowRight, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-
-interface Franchise {
-  id: number;
-  name: string;
-  description: string;
-  segment: string;
-  investment: string;
-  payback: string;
-  units: string;
-}
-
-const mockFranchises: Franchise[] = [
-  {
-    id: 1,
-    name: "Franquia de Alimentação Premium",
-    description: "Uma oportunidade única no segmento de alimentação saudável e de alta qualidade",
-    segment: "Alimentação",
-    investment: "R$ 150.000",
-    payback: "24 meses",
-    units: "250+"
-  },
-  {
-    id: 2,
-    name: "Franquia de Serviços Automotivos",
-    description: "Negócio consolidado no mercado automotivo com excelente retorno",
-    segment: "Automotivo",
-    investment: "R$ 200.000",
-    payback: "18 meses",
-    units: "180+"
-  },
-  {
-    id: 3,
-    name: "Franquia de Educação Infantil",
-    description: "Marca reconhecida nacionalmente no segmento de educação para crianças",
-    segment: "Educação",
-    investment: "R$ 300.000",
-    payback: "30 meses",
-    units: "420+"
-  },
-  {
-    id: 4,
-    name: "Franquia de Beleza e Estética",
-    description: "Salão de beleza moderno com produtos exclusivos e alta demanda",
-    segment: "Beleza",
-    investment: "R$ 120.000",
-    payback: "20 meses",
-    units: "310+"
-  },
-  {
-    id: 5,
-    name: "Franquia de Academia Fitness",
-    description: "Rede de academias com equipamentos de ponta e metodologia exclusiva",
-    segment: "Fitness",
-    investment: "R$ 400.000",
-    payback: "36 meses",
-    units: "150+"
-  }
-];
+import { Heart, X, Info, Star, ArrowRight, Trash2, LogOut } from "lucide-react";
+import { useFranchises } from "@/hooks/useFranchises";
+import { useFavorites } from "@/hooks/useFavorites";
+import { useMatchInteractions } from "@/hooks/useMatchInteractions";
 
 const Match = () => {
+  const navigate = useNavigate();
+  const [userId, setUserId] = useState<string | undefined>();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [favorites, setFavorites] = useState<Franchise[]>([]);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const currentFranchise = mockFranchises[currentIndex];
+  const { franchises, loading: loadingFranchises, setFranchises } = useFranchises(userId);
+  const { favorites, loading: loadingFavorites, addFavorite, removeFavorite } = useFavorites(userId);
+  const { recordInteraction } = useMatchInteractions(userId);
 
-  const handleFavorite = () => {
-    if (isAnimating) return;
+  useEffect(() => {
+    // Verificar autenticação
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        navigate("/auth");
+        return;
+      }
+      setUserId(session.user.id);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
+        navigate("/auth");
+      } else {
+        setUserId(session.user.id);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
+  };
+
+  const currentFranchise = franchises[currentIndex];
+
+  const handleLike = async () => {
+    if (isAnimating || !currentFranchise) return;
+    
+    const success = await recordInteraction(currentFranchise.id, "gostei");
+    if (success) {
+      handleNext();
+    }
+  };
+
+  const handleDislike = async () => {
+    if (isAnimating || !currentFranchise) return;
+    
+    const success = await recordInteraction(currentFranchise.id, "nao_gostei");
+    if (success) {
+      handleNext();
+    }
+  };
+
+  const handleFavorite = async () => {
+    if (isAnimating || !currentFranchise) return;
     
     setIsAnimating(true);
-    setFavorites([...favorites, currentFranchise]);
+    const success = await addFavorite(currentFranchise);
     
-    setTimeout(() => {
-      setCurrentIndex((currentIndex + 1) % mockFranchises.length);
+    if (success) {
+      setTimeout(() => {
+        handleNext();
+        setIsAnimating(false);
+      }, 500);
+    } else {
       setIsAnimating(false);
-    }, 500);
+    }
   };
 
   const handleNext = () => {
     if (isAnimating) return;
-    setCurrentIndex((currentIndex + 1) % mockFranchises.length);
+    
+    // Remove a franquia atual da lista
+    const newFranchises = franchises.filter((_, index) => index !== currentIndex);
+    setFranchises(newFranchises);
+    
+    // Resetar o índice se necessário
+    if (currentIndex >= newFranchises.length) {
+      setCurrentIndex(0);
+    }
   };
 
-  const handleRemoveFavorite = (id: number) => {
-    setFavorites(favorites.filter(fav => fav.id !== id));
+  const handleRemoveFav = async (favoritoId: string, franquiaId: string) => {
+    await removeFavorite(favoritoId, franquiaId);
   };
+
+  if (loadingFranchises || loadingFavorites) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
+          <p className="text-muted-foreground">Carregando franquias...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (franchises.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
+        <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
+          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            <Link to="/" className="text-2xl font-bold text-gradient">
+              FranchiMatch
+            </Link>
+            <Button variant="outline" onClick={handleLogout} className="gap-2">
+              <LogOut className="h-4 w-4" />
+              Sair
+            </Button>
+          </div>
+        </header>
+        <div className="flex items-center justify-center min-h-[calc(100vh-100px)]">
+          <Card className="max-w-md">
+            <CardContent className="p-8 text-center space-y-4">
+              <Star className="h-16 w-16 mx-auto text-muted-foreground opacity-50" />
+              <h2 className="text-2xl font-bold">Sem mais franquias</h2>
+              <p className="text-muted-foreground">
+                Você já visualizou todas as franquias disponíveis!
+              </p>
+              <Button variant="cta" className="w-full" asChild>
+                <Link to="/">Voltar ao Início</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
@@ -98,8 +148,9 @@ const Match = () => {
           <Link to="/" className="text-2xl font-bold text-gradient">
             FranchiMatch
           </Link>
-          <Button variant="outline" asChild>
-            <Link to="/">Voltar ao Início</Link>
+          <Button variant="outline" onClick={handleLogout} className="gap-2">
+            <LogOut className="h-4 w-4" />
+            Sair
           </Button>
         </div>
       </header>
@@ -129,26 +180,34 @@ const Match = () => {
                 {/* Card Content */}
                 <div className="p-6 space-y-4">
                   <div className="space-y-2">
-                    <h3 className="text-2xl font-bold text-foreground">{currentFranchise.name}</h3>
-                    <p className="text-muted-foreground">{currentFranchise.description}</p>
+                    <h3 className="text-2xl font-bold text-foreground">{currentFranchise.nome}</h3>
+                    <p className="text-muted-foreground">{currentFranchise.descricao || "Descrição não disponível"}</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 py-4">
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">Segmento</p>
-                      <p className="font-semibold text-foreground">{currentFranchise.segment}</p>
+                      <p className="font-semibold text-foreground">{currentFranchise.segmento}</p>
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">Investimento</p>
-                      <p className="font-semibold text-foreground">{currentFranchise.investment}</p>
+                      <p className="font-semibold text-foreground">
+                        {currentFranchise.investimento_minimo 
+                          ? `R$ ${currentFranchise.investimento_minimo.toLocaleString('pt-BR')}`
+                          : "Sob consulta"}
+                      </p>
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">Payback Médio</p>
-                      <p className="font-semibold text-foreground">{currentFranchise.payback}</p>
+                      <p className="font-semibold text-foreground">
+                        {currentFranchise.payback_medio ? `${currentFranchise.payback_medio} meses` : "N/D"}
+                      </p>
                     </div>
                     <div className="space-y-1">
                       <p className="text-sm text-muted-foreground">Unidades</p>
-                      <p className="font-semibold text-foreground">{currentFranchise.units}</p>
+                      <p className="font-semibold text-foreground">
+                        {currentFranchise.unidades_brasil ? `${currentFranchise.unidades_brasil}+` : "N/D"}
+                      </p>
                     </div>
                   </div>
 
@@ -161,12 +220,12 @@ const Match = () => {
                     <Button 
                       variant="outline" 
                       className="gap-2 border-destructive/50 text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                      onClick={handleNext}
+                      onClick={handleDislike}
                     >
                       <X className="h-4 w-4" />
                       Não gostei
                     </Button>
-                    <Button variant="hero" className="gap-2" onClick={handleNext}>
+                    <Button variant="hero" className="gap-2" onClick={handleLike}>
                       <Heart className="h-4 w-4" />
                       Gostei
                     </Button>
@@ -199,7 +258,7 @@ const Match = () => {
                 </div>
                 
                 <p className="text-sm text-muted-foreground">
-                  Favorite de 3 a 5 marcas para análise
+                  Favorite de 3 a 5 marcas para análise ({favorites.length}/3)
                 </p>
 
                 <div className="space-y-3 min-h-[200px]">
@@ -211,7 +270,7 @@ const Match = () => {
                   ) : (
                     favorites.map((franchise, index) => (
                       <Card 
-                        key={franchise.id} 
+                        key={franchise.favorito_id} 
                         className="animate-scale-in shadow-md hover:shadow-lg transition-shadow"
                         style={{ animationDelay: `${index * 50}ms` }}
                       >
@@ -222,15 +281,15 @@ const Match = () => {
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-semibold text-sm text-foreground truncate">
-                                {franchise.name}
+                                {franchise.nome}
                               </h4>
-                              <p className="text-xs text-muted-foreground">{franchise.segment}</p>
+                              <p className="text-xs text-muted-foreground">{franchise.segmento}</p>
                             </div>
                             <Button
                               variant="ghost"
                               size="icon"
                               className="flex-shrink-0 h-8 w-8"
-                              onClick={() => handleRemoveFavorite(franchise.id)}
+                              onClick={() => handleRemoveFav(franchise.favorito_id, franchise.id)}
                             >
                               <Trash2 className="h-4 w-4 text-destructive" />
                             </Button>
