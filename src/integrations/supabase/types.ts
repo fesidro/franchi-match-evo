@@ -14,7 +14,279 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      compras_pacotes: {
+        Row: {
+          created_at: string | null
+          data_compra: string | null
+          franquia_id: string
+          id: string
+          numero_pacote: number
+          pago: boolean | null
+          usuario_id: string
+          valor: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          data_compra?: string | null
+          franquia_id: string
+          id?: string
+          numero_pacote: number
+          pago?: boolean | null
+          usuario_id: string
+          valor?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          data_compra?: string | null
+          franquia_id?: string
+          id?: string
+          numero_pacote?: number
+          pago?: boolean | null
+          usuario_id?: string
+          valor?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "compras_pacotes_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      favoritos: {
+        Row: {
+          ativo: boolean | null
+          created_at: string | null
+          franquia_id: string
+          id: string
+          updated_at: string | null
+          usuario_id: string
+        }
+        Insert: {
+          ativo?: boolean | null
+          created_at?: string | null
+          franquia_id: string
+          id?: string
+          updated_at?: string | null
+          usuario_id: string
+        }
+        Update: {
+          ativo?: boolean | null
+          created_at?: string | null
+          franquia_id?: string
+          id?: string
+          updated_at?: string | null
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favoritos_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      franquias: {
+        Row: {
+          created_at: string | null
+          descricao: string | null
+          id: string
+          investimento_maximo: number | null
+          investimento_minimo: number | null
+          logo_url: string | null
+          nome: string
+          payback_medio: number | null
+          segmento: string
+          unidades_brasil: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          descricao?: string | null
+          id?: string
+          investimento_maximo?: number | null
+          investimento_minimo?: number | null
+          logo_url?: string | null
+          nome: string
+          payback_medio?: number | null
+          segmento: string
+          unidades_brasil?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          descricao?: string | null
+          id?: string
+          investimento_maximo?: number | null
+          investimento_minimo?: number | null
+          logo_url?: string | null
+          nome?: string
+          payback_medio?: number | null
+          segmento?: string
+          unidades_brasil?: number | null
+        }
+        Relationships: []
+      }
+      franquias_detalhes_pacote2: {
+        Row: {
+          created_at: string | null
+          franquia_id: string
+          id: string
+          requisitos_espaco: string | null
+          suporte_oferecido: string | null
+          taxa_franquia: number | null
+          taxa_marketing: number | null
+          taxa_royalties: number | null
+          territorio_exclusivo: boolean | null
+          treinamento: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          franquia_id: string
+          id?: string
+          requisitos_espaco?: string | null
+          suporte_oferecido?: string | null
+          taxa_franquia?: number | null
+          taxa_marketing?: number | null
+          taxa_royalties?: number | null
+          territorio_exclusivo?: boolean | null
+          treinamento?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          franquia_id?: string
+          id?: string
+          requisitos_espaco?: string | null
+          suporte_oferecido?: string | null
+          taxa_franquia?: number | null
+          taxa_marketing?: number | null
+          taxa_royalties?: number | null
+          territorio_exclusivo?: boolean | null
+          treinamento?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "franquias_detalhes_pacote2_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: true
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      franquias_detalhes_pacote3: {
+        Row: {
+          analise_mercado: string | null
+          created_at: string | null
+          franquia_id: string
+          id: string
+          pontos_fortes: string | null
+          pontos_fracos: string | null
+          potencial_retorno: string | null
+          riscos_identificados: string | null
+        }
+        Insert: {
+          analise_mercado?: string | null
+          created_at?: string | null
+          franquia_id: string
+          id?: string
+          pontos_fortes?: string | null
+          pontos_fracos?: string | null
+          potencial_retorno?: string | null
+          riscos_identificados?: string | null
+        }
+        Update: {
+          analise_mercado?: string | null
+          created_at?: string | null
+          franquia_id?: string
+          id?: string
+          pontos_fortes?: string | null
+          pontos_fracos?: string | null
+          potencial_retorno?: string | null
+          riscos_identificados?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "franquias_detalhes_pacote3_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: true
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      franquias_detalhes_pacote4: {
+        Row: {
+          created_at: string | null
+          cronograma_implementacao: string | null
+          documentos_necessarios: string | null
+          estrategia_negociacao: string | null
+          franquia_id: string
+          id: string
+          suporte_pos_venda: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          cronograma_implementacao?: string | null
+          documentos_necessarios?: string | null
+          estrategia_negociacao?: string | null
+          franquia_id: string
+          id?: string
+          suporte_pos_venda?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          cronograma_implementacao?: string | null
+          documentos_necessarios?: string | null
+          estrategia_negociacao?: string | null
+          franquia_id?: string
+          id?: string
+          suporte_pos_venda?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "franquias_detalhes_pacote4_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: true
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      interacoes_match: {
+        Row: {
+          acao: string
+          created_at: string | null
+          franquia_id: string
+          id: string
+          usuario_id: string
+        }
+        Insert: {
+          acao: string
+          created_at?: string | null
+          franquia_id: string
+          id?: string
+          usuario_id: string
+        }
+        Update: {
+          acao?: string
+          created_at?: string | null
+          franquia_id?: string
+          id?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interacoes_match_franquia_id_fkey"
+            columns: ["franquia_id"]
+            isOneToOne: false
+            referencedRelation: "franquias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
