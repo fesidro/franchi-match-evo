@@ -119,6 +119,7 @@ export type Database = {
           pros_resumido: string[] | null
           publico_alvo: string | null
           qtd_unidades: number | null
+          royalties: string | null
           royalties_percentual: number | null
           segmento: string
           selo_excelencia_abf: boolean | null
@@ -154,6 +155,7 @@ export type Database = {
           pros_resumido?: string[] | null
           publico_alvo?: string | null
           qtd_unidades?: number | null
+          royalties?: string | null
           royalties_percentual?: number | null
           segmento: string
           selo_excelencia_abf?: boolean | null
@@ -189,6 +191,7 @@ export type Database = {
           pros_resumido?: string[] | null
           publico_alvo?: string | null
           qtd_unidades?: number | null
+          royalties?: string | null
           royalties_percentual?: number | null
           segmento?: string
           selo_excelencia_abf?: boolean | null
