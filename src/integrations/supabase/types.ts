@@ -94,22 +94,30 @@ export type Database = {
         Row: {
           ativo: boolean | null
           contras: string[] | null
+          contras_resumido: string[] | null
           created_at: string | null
+          data_atualizacao: string | null
           descricao: string | null
+          faturamento_medio: string | null
           faturamento_medio_mensal: number | null
           id: string
           idade_franquia_anos: number | null
+          investimento: string | null
           investimento_maximo: number | null
           investimento_minimo: number | null
           investimento_total: number | null
           logo_url: string | null
           nivel_dedicacao: string | null
+          nivel_interesse_franquia: string | null
+          nivel_interesse_marca: string | null
           nivel_satisfacao_franqueados: number | null
           nivel_suporte_franquia: number | null
           nome: string
           payback_medio: number | null
           payback_medio_meses: number | null
           pros: string[] | null
+          pros_resumido: string[] | null
+          publico_alvo: string | null
           qtd_unidades: number | null
           royalties_percentual: number | null
           segmento: string
@@ -121,22 +129,30 @@ export type Database = {
         Insert: {
           ativo?: boolean | null
           contras?: string[] | null
+          contras_resumido?: string[] | null
           created_at?: string | null
+          data_atualizacao?: string | null
           descricao?: string | null
+          faturamento_medio?: string | null
           faturamento_medio_mensal?: number | null
           id?: string
           idade_franquia_anos?: number | null
+          investimento?: string | null
           investimento_maximo?: number | null
           investimento_minimo?: number | null
           investimento_total?: number | null
           logo_url?: string | null
           nivel_dedicacao?: string | null
+          nivel_interesse_franquia?: string | null
+          nivel_interesse_marca?: string | null
           nivel_satisfacao_franqueados?: number | null
           nivel_suporte_franquia?: number | null
           nome: string
           payback_medio?: number | null
           payback_medio_meses?: number | null
           pros?: string[] | null
+          pros_resumido?: string[] | null
+          publico_alvo?: string | null
           qtd_unidades?: number | null
           royalties_percentual?: number | null
           segmento: string
@@ -148,22 +164,30 @@ export type Database = {
         Update: {
           ativo?: boolean | null
           contras?: string[] | null
+          contras_resumido?: string[] | null
           created_at?: string | null
+          data_atualizacao?: string | null
           descricao?: string | null
+          faturamento_medio?: string | null
           faturamento_medio_mensal?: number | null
           id?: string
           idade_franquia_anos?: number | null
+          investimento?: string | null
           investimento_maximo?: number | null
           investimento_minimo?: number | null
           investimento_total?: number | null
           logo_url?: string | null
           nivel_dedicacao?: string | null
+          nivel_interesse_franquia?: string | null
+          nivel_interesse_marca?: string | null
           nivel_satisfacao_franqueados?: number | null
           nivel_suporte_franquia?: number | null
           nome?: string
           payback_medio?: number | null
           payback_medio_meses?: number | null
           pros?: string[] | null
+          pros_resumido?: string[] | null
+          publico_alvo?: string | null
           qtd_unidades?: number | null
           royalties_percentual?: number | null
           segmento?: string
@@ -176,44 +200,74 @@ export type Database = {
       }
       franquias_detalhes_pacote2: {
         Row: {
+          analise_do_segmento: string | null
+          background_investimento: string | null
+          background_nivel_dedicacao: string | null
+          background_satisfacao_franqueados: string | null
+          background_suporte_franquia: string | null
+          capilaridade_regional: string | null
+          contras_detalhados: string[] | null
           created_at: string | null
+          crescimento_anual_segmento: number | null
+          crescimento_unidades: number | null
+          experiencia_segmento: string | null
+          expertise_necessaria: string | null
           franquia_id: string
+          habilidades_chaves: string[] | null
           id: string
-          requisitos_espaco: string | null
-          suporte_oferecido: string | null
-          taxa_franquia: number | null
-          taxa_marketing: number | null
-          taxa_royalties: number | null
-          territorio_exclusivo: boolean | null
-          treinamento: string | null
+          idade_franquia: number | null
+          nivel_experiencia_segmento: string | null
+          pros_detalhados: string[] | null
+          unidades_2023: number | null
+          unidades_2024: number | null
         }
         Insert: {
+          analise_do_segmento?: string | null
+          background_investimento?: string | null
+          background_nivel_dedicacao?: string | null
+          background_satisfacao_franqueados?: string | null
+          background_suporte_franquia?: string | null
+          capilaridade_regional?: string | null
+          contras_detalhados?: string[] | null
           created_at?: string | null
+          crescimento_anual_segmento?: number | null
+          crescimento_unidades?: number | null
+          experiencia_segmento?: string | null
+          expertise_necessaria?: string | null
           franquia_id: string
+          habilidades_chaves?: string[] | null
           id?: string
-          requisitos_espaco?: string | null
-          suporte_oferecido?: string | null
-          taxa_franquia?: number | null
-          taxa_marketing?: number | null
-          taxa_royalties?: number | null
-          territorio_exclusivo?: boolean | null
-          treinamento?: string | null
+          idade_franquia?: number | null
+          nivel_experiencia_segmento?: string | null
+          pros_detalhados?: string[] | null
+          unidades_2023?: number | null
+          unidades_2024?: number | null
         }
         Update: {
+          analise_do_segmento?: string | null
+          background_investimento?: string | null
+          background_nivel_dedicacao?: string | null
+          background_satisfacao_franqueados?: string | null
+          background_suporte_franquia?: string | null
+          capilaridade_regional?: string | null
+          contras_detalhados?: string[] | null
           created_at?: string | null
+          crescimento_anual_segmento?: number | null
+          crescimento_unidades?: number | null
+          experiencia_segmento?: string | null
+          expertise_necessaria?: string | null
           franquia_id?: string
+          habilidades_chaves?: string[] | null
           id?: string
-          requisitos_espaco?: string | null
-          suporte_oferecido?: string | null
-          taxa_franquia?: number | null
-          taxa_marketing?: number | null
-          taxa_royalties?: number | null
-          territorio_exclusivo?: boolean | null
-          treinamento?: string | null
+          idade_franquia?: number | null
+          nivel_experiencia_segmento?: string | null
+          pros_detalhados?: string[] | null
+          unidades_2023?: number | null
+          unidades_2024?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "franquias_detalhes_pacote2_franquia_id_fkey"
+            foreignKeyName: "franquias_detalhes_pacote2_new_franquia_id_fkey"
             columns: ["franquia_id"]
             isOneToOne: true
             referencedRelation: "franquias"
