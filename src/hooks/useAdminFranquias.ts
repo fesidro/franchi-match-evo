@@ -10,22 +10,30 @@ export interface FranquiaAdmin {
   segmento: string;
   subsegmento: string | null;
   descricao: string | null;
+  faturamento_medio: string | null;
+  investimento: string | null;
   investimento_total: number | null;
   investimento_minimo: number | null;
   investimento_maximo: number | null;
-  taxa_franquia: number | null;
+  taxa_franquia: string | null;
+  royalties: string | null;
   royalties_percentual: number | null;
   faturamento_medio_mensal: number | null;
   payback_medio: number | null;
-  payback_medio_meses: number | null;
+  payback_medio_meses: string | null;
+  nivel_interesse_marca: string | null;
+  nivel_interesse_franquia: string | null;
   nivel_dedicacao: string | null;
   qtd_unidades: number | null;
   unidades_brasil: number | null;
   idade_franquia_anos: number | null;
   nivel_satisfacao_franqueados: number | null;
   nivel_suporte_franquia: number | null;
+  publico_alvo: string | null;
   pros: string[] | null;
   contras: string[] | null;
+  pros_resumido: string[] | null;
+  contras_resumido: string[] | null;
   ativo: boolean;
 }
 
@@ -41,7 +49,14 @@ export const useAdminFranquias = () => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setFranquias(data || []);
+      
+      // Adaptar dados do Supabase para FranquiaAdmin
+      const adaptedData = (data || []).map((item: any) => ({
+        ...item,
+        royalties: item.royalties || null,
+      }));
+      
+      setFranquias(adaptedData);
     } catch (error: any) {
       toast.error("Erro ao carregar franquias");
       console.error(error);
@@ -62,7 +77,7 @@ export const useAdminFranquias = () => {
         throw new Error("O JSON deve ser um array de franquias");
       }
 
-      // Processar pros e contras
+      // Processar pros, contras, pros_resumido e contras_resumido
       const processedData = data.map((item: any) => {
         const processed = { ...item };
         
@@ -74,6 +89,16 @@ export const useAdminFranquias = () => {
         // Converter contras de string para array se necessário
         if (typeof processed.contras === "string") {
           processed.contras = processed.contras.split(",").map((s: string) => s.trim());
+        }
+        
+        // Converter pros_resumido de string para array se necessário
+        if (typeof processed.pros_resumido === "string") {
+          processed.pros_resumido = processed.pros_resumido.split(",").map((s: string) => s.trim());
+        }
+        
+        // Converter contras_resumido de string para array se necessário
+        if (typeof processed.contras_resumido === "string") {
+          processed.contras_resumido = processed.contras_resumido.split(",").map((s: string) => s.trim());
         }
         
         return processed;
@@ -127,18 +152,21 @@ export const useAdminFranquias = () => {
 
   const saveFranquia = async (franquia: FranquiaAdmin) => {
     try {
+      // Remover campos que não existem na tabela do Supabase
+      const { royalties_percentual, investimento_minimo, investimento_maximo, unidades_brasil, payback_medio, idade_franquia_anos, ...dataToSave } = franquia;
+      
       if (franquia.id) {
         // Update
         const { error } = await supabase
           .from("franquias")
-          .update(franquia)
+          .update(dataToSave as any)
           .eq("id", franquia.id);
 
         if (error) throw error;
         toast.success("Franquia atualizada com sucesso");
       } else {
         // Insert
-        const { error } = await supabase.from("franquias").insert([franquia]);
+        const { error } = await supabase.from("franquias").insert([dataToSave as any]);
 
         if (error) throw error;
         toast.success("Franquia criada com sucesso");

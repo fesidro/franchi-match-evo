@@ -23,22 +23,30 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
     segmento: "",
     subsegmento: null,
     descricao: null,
+    faturamento_medio: null,
+    investimento: null,
     investimento_total: null,
     investimento_minimo: null,
     investimento_maximo: null,
     taxa_franquia: null,
+    royalties: null,
     royalties_percentual: null,
     faturamento_medio_mensal: null,
     payback_medio: null,
     payback_medio_meses: null,
+    nivel_interesse_marca: null,
+    nivel_interesse_franquia: null,
     nivel_dedicacao: null,
     qtd_unidades: null,
     unidades_brasil: null,
     idade_franquia_anos: null,
     nivel_satisfacao_franqueados: null,
     nivel_suporte_franquia: null,
+    publico_alvo: null,
     pros: null,
     contras: null,
+    pros_resumido: null,
+    contras_resumido: null,
     ativo: true,
   });
 
@@ -55,10 +63,17 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Processar pros_resumido e contras_resumido antes de salvar
     const dataToSave = {
       ...formData,
       pros: formData.pros || null,
       contras: formData.contras || null,
+      pros_resumido: formData.pros_resumido && typeof formData.pros_resumido === "string" 
+        ? (formData.pros_resumido as string).split("\n").map((s: string) => s.trim()).filter(s => s)
+        : formData.pros_resumido,
+      contras_resumido: formData.contras_resumido && typeof formData.contras_resumido === "string"
+        ? (formData.contras_resumido as string).split("\n").map((s: string) => s.trim()).filter(s => s)
+        : formData.contras_resumido,
     };
     
     const success = await onSave(dataToSave);
@@ -76,22 +91,30 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
       segmento: "",
       subsegmento: null,
       descricao: null,
+      faturamento_medio: null,
+      investimento: null,
       investimento_total: null,
       investimento_minimo: null,
       investimento_maximo: null,
       taxa_franquia: null,
+      royalties: null,
       royalties_percentual: null,
       faturamento_medio_mensal: null,
       payback_medio: null,
       payback_medio_meses: null,
+      nivel_interesse_marca: null,
+      nivel_interesse_franquia: null,
       nivel_dedicacao: null,
       qtd_unidades: null,
       unidades_brasil: null,
       idade_franquia_anos: null,
       nivel_satisfacao_franqueados: null,
       nivel_suporte_franquia: null,
+      publico_alvo: null,
       pros: null,
       contras: null,
+      pros_resumido: null,
+      contras_resumido: null,
       ativo: true,
     });
   };
@@ -155,6 +178,44 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
               />
             </div>
 
+            <div>
+              <Label htmlFor="nivel_interesse_marca">Nível de Interesse na Marca (Google)</Label>
+              <Select
+                value={formData.nivel_interesse_marca || ""}
+                onValueChange={(value) => setFormData({ ...formData, nivel_interesse_marca: value || null })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="MUITO ALTO">MUITO ALTO</SelectItem>
+                  <SelectItem value="ALTO">ALTO</SelectItem>
+                  <SelectItem value="MÉDIO">MÉDIO</SelectItem>
+                  <SelectItem value="BAIXO">BAIXO</SelectItem>
+                  <SelectItem value="MUITO BAIXO">MUITO BAIXO</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="nivel_interesse_franquia">Nível de Interesse na Franquia (Google)</Label>
+              <Select
+                value={formData.nivel_interesse_franquia || ""}
+                onValueChange={(value) => setFormData({ ...formData, nivel_interesse_franquia: value || null })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="MUITO ALTO">MUITO ALTO</SelectItem>
+                  <SelectItem value="ALTO">ALTO</SelectItem>
+                  <SelectItem value="MÉDIO">MÉDIO</SelectItem>
+                  <SelectItem value="BAIXO">BAIXO</SelectItem>
+                  <SelectItem value="MUITO BAIXO">MUITO BAIXO</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
             <div className="col-span-2">
               <Label htmlFor="descricao">Descrição</Label>
               <Textarea
@@ -198,20 +259,19 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
               <Label htmlFor="taxa_franquia">Taxa de Franquia</Label>
               <Input
                 id="taxa_franquia"
-                type="number"
                 value={formData.taxa_franquia || ""}
-                onChange={(e) => setFormData({ ...formData, taxa_franquia: e.target.value ? Number(e.target.value) : null })}
+                onChange={(e) => setFormData({ ...formData, taxa_franquia: e.target.value || null })}
+                placeholder="Ex: R$ 30 mil"
               />
             </div>
 
             <div>
-              <Label htmlFor="royalties_percentual">Royalties %</Label>
+              <Label htmlFor="royalties">Royalties</Label>
               <Input
-                id="royalties_percentual"
-                type="number"
-                step="0.1"
-                value={formData.royalties_percentual || ""}
-                onChange={(e) => setFormData({ ...formData, royalties_percentual: e.target.value ? Number(e.target.value) : null })}
+                id="royalties"
+                value={formData.royalties || ""}
+                onChange={(e) => setFormData({ ...formData, royalties: e.target.value || null })}
+                placeholder="Ex: 5% sobre faturamento"
               />
             </div>
 
@@ -226,12 +286,12 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
             </div>
 
             <div>
-              <Label htmlFor="payback_medio_meses">Payback Médio (meses)</Label>
+              <Label htmlFor="payback_medio_meses">Payback Médio</Label>
               <Input
                 id="payback_medio_meses"
-                type="number"
                 value={formData.payback_medio_meses || ""}
-                onChange={(e) => setFormData({ ...formData, payback_medio_meses: e.target.value ? Number(e.target.value) : null })}
+                onChange={(e) => setFormData({ ...formData, payback_medio_meses: e.target.value || null })}
+                placeholder="Ex: 24 a 36 meses"
               />
             </div>
 
@@ -273,33 +333,80 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
             </div>
 
             <div>
-              <Label htmlFor="nivel_satisfacao_franqueados">Satisfação dos Franqueados (1-5)</Label>
+              <Label htmlFor="nivel_satisfacao_franqueados">Nível de Satisfação dos Franqueados (%)</Label>
               <Input
                 id="nivel_satisfacao_franqueados"
                 type="number"
                 step="0.1"
-                min="1"
-                max="5"
+                min="0"
+                max="100"
                 value={formData.nivel_satisfacao_franqueados || ""}
                 onChange={(e) => setFormData({ ...formData, nivel_satisfacao_franqueados: e.target.value ? Number(e.target.value) : null })}
               />
             </div>
 
             <div>
-              <Label htmlFor="nivel_suporte_franquia">Nível de Suporte (1-5)</Label>
+              <Label htmlFor="nivel_suporte_franquia">Nível de Suporte da Franquia (%)</Label>
               <Input
                 id="nivel_suporte_franquia"
                 type="number"
                 step="0.1"
-                min="1"
-                max="5"
+                min="0"
+                max="100"
                 value={formData.nivel_suporte_franquia || ""}
                 onChange={(e) => setFormData({ ...formData, nivel_suporte_franquia: e.target.value ? Number(e.target.value) : null })}
               />
             </div>
 
             <div className="col-span-2">
-              <Label htmlFor="pros">Prós (Separe cada item com vírgula)</Label>
+              <Label htmlFor="publico_alvo">Público-Alvo</Label>
+              <Textarea
+                id="publico_alvo"
+                rows={3}
+                value={formData.publico_alvo || ""}
+                onChange={(e) => setFormData({ ...formData, publico_alvo: e.target.value || null })}
+                placeholder="Descreva o público-alvo ideal para esta franquia"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <Label htmlFor="pros_resumido">Prós (Pontos Positivos Resumidos)</Label>
+              <Textarea
+                id="pros_resumido"
+                rows={4}
+                value={
+                  Array.isArray(formData.pros_resumido)
+                    ? formData.pros_resumido.join("\n")
+                    : formData.pros_resumido || ""
+                }
+                onChange={(e) =>
+                  setFormData({ ...formData, pros_resumido: e.target.value as any })
+                }
+                placeholder="Digite cada ponto positivo em uma linha separada"
+              />
+              <p className="text-sm text-muted-foreground mt-1">Cada linha será um item da lista</p>
+            </div>
+
+            <div className="col-span-2">
+              <Label htmlFor="contras_resumido">Contras (Pontos Negativos Resumidos)</Label>
+              <Textarea
+                id="contras_resumido"
+                rows={4}
+                value={
+                  Array.isArray(formData.contras_resumido)
+                    ? formData.contras_resumido.join("\n")
+                    : formData.contras_resumido || ""
+                }
+                onChange={(e) =>
+                  setFormData({ ...formData, contras_resumido: e.target.value as any })
+                }
+                placeholder="Digite cada ponto negativo em uma linha separada"
+              />
+              <p className="text-sm text-muted-foreground mt-1">Cada linha será um item da lista</p>
+            </div>
+
+            <div className="col-span-2">
+              <Label htmlFor="pros">Prós Detalhados (Separe cada item com vírgula)</Label>
               <Textarea
                 id="pros"
                 value={prosText}
@@ -312,7 +419,7 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
             </div>
 
             <div className="col-span-2">
-              <Label htmlFor="contras">Contras (Separe cada item com vírgula)</Label>
+              <Label htmlFor="contras">Contras Detalhados (Separe cada item com vírgula)</Label>
               <Textarea
                 id="contras"
                 value={contrasText}
