@@ -119,8 +119,8 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
     });
   };
 
-  const prosText = formData.pros ? formData.pros.join(", ") : "";
-  const contrasText = formData.contras ? formData.contras.join(", ") : "";
+  const prosText = formData.pros ? formData.pros.join("\n") : "";
+  const contrasText = formData.contras ? formData.contras.join("\n") : "";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -373,7 +373,7 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
               <Label htmlFor="pros_resumido">Prós (Pontos Positivos Resumidos)</Label>
               <Textarea
                 id="pros_resumido"
-                rows={4}
+                rows={5}
                 value={
                   Array.isArray(formData.pros_resumido)
                     ? formData.pros_resumido.join("\n")
@@ -382,16 +382,16 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
                 onChange={(e) =>
                   setFormData({ ...formData, pros_resumido: e.target.value as any })
                 }
-                placeholder="Digite cada ponto positivo em uma linha separada"
+                placeholder="Digite cada item em uma linha separada (pressione Enter)"
               />
-              <p className="text-sm text-muted-foreground mt-1">Cada linha será um item da lista</p>
+              <p className="text-sm text-muted-foreground mt-1">Cada linha será um item da lista. Você pode usar vírgulas normalmente no texto.</p>
             </div>
 
             <div className="col-span-2">
               <Label htmlFor="contras_resumido">Contras (Pontos Negativos Resumidos)</Label>
               <Textarea
                 id="contras_resumido"
-                rows={4}
+                rows={5}
                 value={
                   Array.isArray(formData.contras_resumido)
                     ? formData.contras_resumido.join("\n")
@@ -400,35 +400,39 @@ export const FranquiaFormDialog = ({ open, onOpenChange, franquia, onSave }: Fra
                 onChange={(e) =>
                   setFormData({ ...formData, contras_resumido: e.target.value as any })
                 }
-                placeholder="Digite cada ponto negativo em uma linha separada"
+                placeholder="Digite cada item em uma linha separada (pressione Enter)"
               />
-              <p className="text-sm text-muted-foreground mt-1">Cada linha será um item da lista</p>
+              <p className="text-sm text-muted-foreground mt-1">Cada linha será um item da lista. Você pode usar vírgulas normalmente no texto.</p>
             </div>
 
             <div className="col-span-2">
-              <Label htmlFor="pros">Prós Detalhados (Separe cada item com vírgula)</Label>
+              <Label htmlFor="pros">Prós Detalhados</Label>
               <Textarea
                 id="pros"
+                rows={5}
                 value={prosText}
                 onChange={(e) => {
-                  const items = e.target.value.split(",").map(s => s.trim()).filter(s => s);
+                  const items = e.target.value.split("\n").map(s => s.trim()).filter(s => s);
                   setFormData({ ...formData, pros: items.length > 0 ? items : null });
                 }}
-                placeholder="Ex: Marca forte, Suporte completo, Alto retorno"
+                placeholder="Digite cada item em uma linha separada (pressione Enter)"
               />
+              <p className="text-sm text-muted-foreground mt-1">Cada linha será um item da lista. Você pode usar vírgulas normalmente no texto.</p>
             </div>
 
             <div className="col-span-2">
-              <Label htmlFor="contras">Contras Detalhados (Separe cada item com vírgula)</Label>
+              <Label htmlFor="contras">Contras Detalhados</Label>
               <Textarea
                 id="contras"
+                rows={5}
                 value={contrasText}
                 onChange={(e) => {
-                  const items = e.target.value.split(",").map(s => s.trim()).filter(s => s);
+                  const items = e.target.value.split("\n").map(s => s.trim()).filter(s => s);
                   setFormData({ ...formData, contras: items.length > 0 ? items : null });
                 }}
-                placeholder="Ex: Alto investimento inicial, Exige dedicação integral"
+                placeholder="Digite cada item em uma linha separada (pressione Enter)"
               />
+              <p className="text-sm text-muted-foreground mt-1">Cada linha será um item da lista. Você pode usar vírgulas normalmente no texto.</p>
             </div>
 
             <div className="col-span-2 flex items-center space-x-2">

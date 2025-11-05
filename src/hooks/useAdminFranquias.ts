@@ -81,24 +81,42 @@ export const useAdminFranquias = () => {
       const processedData = data.map((item: any) => {
         const processed = { ...item };
         
-        // Converter pros de string para array se necessário
+        // Converter pros de string para array se necessário (mantém compatibilidade com vírgula para JSONs antigos)
         if (typeof processed.pros === "string") {
-          processed.pros = processed.pros.split(",").map((s: string) => s.trim());
+          // Se tiver quebra de linha, usar quebra de linha como separador
+          if (processed.pros.includes('\n')) {
+            processed.pros = processed.pros.split('\n').map((s: string) => s.trim()).filter((s: string) => s);
+          } else {
+            // Senão, usar vírgula (retrocompatibilidade)
+            processed.pros = processed.pros.split(',').map((s: string) => s.trim()).filter((s: string) => s);
+          }
         }
         
         // Converter contras de string para array se necessário
         if (typeof processed.contras === "string") {
-          processed.contras = processed.contras.split(",").map((s: string) => s.trim());
+          if (processed.contras.includes('\n')) {
+            processed.contras = processed.contras.split('\n').map((s: string) => s.trim()).filter((s: string) => s);
+          } else {
+            processed.contras = processed.contras.split(',').map((s: string) => s.trim()).filter((s: string) => s);
+          }
         }
         
         // Converter pros_resumido de string para array se necessário
         if (typeof processed.pros_resumido === "string") {
-          processed.pros_resumido = processed.pros_resumido.split(",").map((s: string) => s.trim());
+          if (processed.pros_resumido.includes('\n')) {
+            processed.pros_resumido = processed.pros_resumido.split('\n').map((s: string) => s.trim()).filter((s: string) => s);
+          } else {
+            processed.pros_resumido = processed.pros_resumido.split(',').map((s: string) => s.trim()).filter((s: string) => s);
+          }
         }
         
         // Converter contras_resumido de string para array se necessário
         if (typeof processed.contras_resumido === "string") {
-          processed.contras_resumido = processed.contras_resumido.split(",").map((s: string) => s.trim());
+          if (processed.contras_resumido.includes('\n')) {
+            processed.contras_resumido = processed.contras_resumido.split('\n').map((s: string) => s.trim()).filter((s: string) => s);
+          } else {
+            processed.contras_resumido = processed.contras_resumido.split(',').map((s: string) => s.trim()).filter((s: string) => s);
+          }
         }
         
         return processed;
