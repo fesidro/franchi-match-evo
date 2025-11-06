@@ -114,7 +114,7 @@ export type Database = {
           nivel_suporte_franquia: number | null
           nome: string
           payback_medio: number | null
-          payback_medio_meses: number | null
+          payback_medio_meses: string | null
           pros: string[] | null
           pros_resumido: string[] | null
           publico_alvo: string | null
@@ -124,7 +124,7 @@ export type Database = {
           segmento: string
           selo_excelencia_abf: boolean | null
           subsegmento: string | null
-          taxa_franquia: number | null
+          taxa_franquia: string | null
           unidades_brasil: number | null
         }
         Insert: {
@@ -150,7 +150,7 @@ export type Database = {
           nivel_suporte_franquia?: number | null
           nome: string
           payback_medio?: number | null
-          payback_medio_meses?: number | null
+          payback_medio_meses?: string | null
           pros?: string[] | null
           pros_resumido?: string[] | null
           publico_alvo?: string | null
@@ -160,7 +160,7 @@ export type Database = {
           segmento: string
           selo_excelencia_abf?: boolean | null
           subsegmento?: string | null
-          taxa_franquia?: number | null
+          taxa_franquia?: string | null
           unidades_brasil?: number | null
         }
         Update: {
@@ -186,7 +186,7 @@ export type Database = {
           nivel_suporte_franquia?: number | null
           nome?: string
           payback_medio?: number | null
-          payback_medio_meses?: number | null
+          payback_medio_meses?: string | null
           pros?: string[] | null
           pros_resumido?: string[] | null
           publico_alvo?: string | null
@@ -196,7 +196,7 @@ export type Database = {
           segmento?: string
           selo_excelencia_abf?: boolean | null
           subsegmento?: string | null
-          taxa_franquia?: number | null
+          taxa_franquia?: string | null
           unidades_brasil?: number | null
         }
         Relationships: []
