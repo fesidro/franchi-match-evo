@@ -5,15 +5,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useAdminFranquias, FranquiaAdmin } from "@/hooks/useAdminFranquias";
+import { useAdminPacote2 } from "@/hooks/useAdminPacote2";
 import { FranquiaFormDialog } from "@/components/admin/FranquiaFormDialog";
-import { Upload, Trash2, Plus, Edit, AlertCircle } from "lucide-react";
+import { Upload, Trash2, Plus, Edit, AlertCircle, FileJson } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const AdminFranquias = () => {
   const navigate = useNavigate();
   const { franquias, loading, importFromJson, clearAll, deleteFranquia, saveFranquia } = useAdminFranquias();
+  const { loading: loadingPacote2, importFromJson: importPacote2 } = useAdminPacote2();
   
   const [jsonInput, setJsonInput] = useState("");
+  const [jsonPacote2Input, setJsonPacote2Input] = useState("");
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [selectedFranquia, setSelectedFranquia] = useState<FranquiaAdmin | null>(null);
@@ -26,6 +29,14 @@ const AdminFranquias = () => {
     }
     await importFromJson(jsonInput);
     setJsonInput("");
+  };
+
+  const handleImportPacote2 = async () => {
+    if (!jsonPacote2Input.trim()) {
+      return;
+    }
+    await importPacote2(jsonPacote2Input);
+    setJsonPacote2Input("");
   };
 
   const handleClearAll = async () => {
@@ -101,7 +112,76 @@ Exemplo:
           </CardContent>
         </Card>
 
-        {/* Seção 2: Gerenciamento */}
+        {/* Seção 2: Importação Pacote 2 */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FileJson className="w-5 h-5" />
+              Importar Dados do Pacote 2 (Detalhes das Franquias)
+            </CardTitle>
+            <CardDescription>
+              Importe análises detalhadas para franquias já cadastradas. Cada item deve referenciar uma franquia existente pelo nome exato.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="bg-muted p-4 rounded-lg text-sm space-y-2">
+              <p className="font-semibold">Formato JSON esperado:</p>
+              <pre className="text-xs overflow-x-auto bg-background p-3 rounded">
+{`[
+  {
+    "franquia_nome": "Nome Exato da Franquia",
+    "analise_do_segmento": "Texto da análise...",
+    "crescimento_anual_segmento": 12.5,
+    "background_nivel_dedicacao": "Texto...",
+    "background_investimento": "Texto...",
+    "unidades_2024": 150,
+    "unidades_2023": 120,
+    "capilaridade_regional": "Texto...",
+    "background_satisfacao_franqueados": "Texto...",
+    "background_suporte_franquia": "Texto...",
+    "idade_franquia": 10,
+    "pros_detalhados": [
+      "Ponto positivo 1",
+      "Ponto positivo 2"
+    ],
+    "contras_detalhados": [
+      "Ponto negativo 1",
+      "Ponto negativo 2"
+    ],
+    "expertise_necessaria": "Texto...",
+    "nivel_experiencia_segmento": "Texto...",
+    "experiencia_segmento": "Texto...",
+    "habilidades_chaves": [
+      "Habilidade 1",
+      "Habilidade 2"
+    ]
+  }
+]`}
+              </pre>
+              <p className="text-xs text-muted-foreground mt-2">
+                ⚠️ O campo <code>crescimento_unidades</code> é calculado automaticamente com base em unidades_2024 e unidades_2023.
+              </p>
+            </div>
+            
+            <Textarea
+              placeholder='Cole aqui o JSON com os dados do Pacote 2...'
+              value={jsonPacote2Input}
+              onChange={(e) => setJsonPacote2Input(e.target.value)}
+              className="min-h-[200px] font-mono text-sm"
+            />
+            
+            <Button 
+              onClick={handleImportPacote2} 
+              disabled={!jsonPacote2Input.trim() || loadingPacote2} 
+              className="w-full sm:w-auto bg-green-600 hover:bg-green-700"
+            >
+              <Upload className="w-4 h-4 mr-2" />
+              {loadingPacote2 ? "Importando..." : "Importar Dados do Pacote 2"}
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Seção 3: Gerenciamento */}
         <Card className="mb-8">
           <CardHeader>
             <CardTitle>Gerenciamento de Dados</CardTitle>
