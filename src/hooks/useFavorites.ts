@@ -22,17 +22,7 @@ export const useFavorites = (userId: string | undefined) => {
         .from("favoritos")
         .select(`
           id,
-          franquias (
-            id,
-            nome,
-            descricao,
-            segmento,
-            investimento_minimo,
-            investimento_maximo,
-            payback_medio,
-            unidades_brasil,
-            logo_url
-          )
+          franquias (*)
         `)
         .eq("usuario_id", userId)
         .eq("ativo", true);
