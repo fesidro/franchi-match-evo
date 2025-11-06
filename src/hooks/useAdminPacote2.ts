@@ -56,12 +56,6 @@ export const useAdminPacote2 = () => {
 
           const franquiaId = franquiaData.id;
 
-          // Calcular crescimento de unidades
-          let crescimentoUnidades = null;
-          if (item.unidades_2024 && item.unidades_2023 && item.unidades_2023 > 0) {
-            crescimentoUnidades = ((item.unidades_2024 - item.unidades_2023) / item.unidades_2023) * 100;
-          }
-
           // Verificar se já existe registro
           const { data: existingData } = await supabase
             .from("franquias_detalhes_pacote2")
@@ -77,7 +71,6 @@ export const useAdminPacote2 = () => {
             background_investimento: item.background_investimento || null,
             unidades_2024: item.unidades_2024 || null,
             unidades_2023: item.unidades_2023 || null,
-            crescimento_unidades: crescimentoUnidades,
             capilaridade_regional: item.capilaridade_regional || null,
             background_satisfacao_franqueados: item.background_satisfacao_franqueados || null,
             background_suporte_franquia: item.background_suporte_franquia || null,
