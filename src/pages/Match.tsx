@@ -18,31 +18,31 @@ const Match = () => {
   const { favorites, loading: loadingFavorites, addFavorite, removeFavorite } = useFavorites(userId);
   const { recordInteraction } = useMatchInteractions(userId);
 
-  useEffect(() => {
-    // Verificar autenticação
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) {
-        navigate("/auth");
-        return;
-      }
-      setUserId(session.user.id);
-    });
+  // useEffect(() => {
+  //   // Verificar autenticação
+  //   supabase.auth.getSession().then(({ data: { session } }) => {
+  //     if (!session) {
+  //       navigate("/auth");
+  //       return;
+  //     }
+  //     setUserId(session.user.id);
+  //   });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        navigate("/auth");
-      } else {
-        setUserId(session.user.id);
-      }
-    });
+  //   const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+  //     if (!session) {
+  //       navigate("/auth");
+  //     } else {
+  //       setUserId(session.user.id);
+  //     }
+  //   });
 
-    return () => subscription.unsubscribe();
-  }, [navigate]);
+  //   return () => subscription.unsubscribe();
+  // }, [navigate]);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/");
-  };
+  // const handleLogout = async () => {
+  //   await supabase.auth.signOut();
+  //   navigate("/");
+  // };
 
   const currentFranchise = franchises[currentIndex];
 
@@ -116,10 +116,10 @@ const Match = () => {
             <Link to="/" className="text-2xl font-bold text-gradient">
               FranchiMatch
             </Link>
-            <Button variant="outline" onClick={handleLogout} className="gap-2">
+            {/* <Button variant="outline" onClick={handleLogout} className="gap-2">
               <LogOut className="h-4 w-4" />
               Sair
-            </Button>
+            </Button> */}
           </div>
         </header>
         <div className="flex items-center justify-center min-h-[calc(100vh-100px)]">
@@ -148,10 +148,10 @@ const Match = () => {
           <Link to="/" className="text-2xl font-bold text-gradient">
             FranchiMatch
           </Link>
-          <Button variant="outline" onClick={handleLogout} className="gap-2">
+          {/* <Button variant="outline" onClick={handleLogout} className="gap-2">
             <LogOut className="h-4 w-4" />
             Sair
-          </Button>
+          </Button> */}
         </div>
       </header>
 
