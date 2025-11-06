@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useFranchises } from "@/hooks/useFranchises";
 import { useFavorites } from "@/hooks/useFavorites";
@@ -22,10 +22,33 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const Match = () => {
-  const [userId] = useState<string | undefined>();
+  const [userId, setUserId] = useState<string | undefined>();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showResetDialog, setShowResetDialog] = useState(false);
+
+  // Obter ou criar ID de usuário para testes
+  useEffect(() => {
+    const getUsuarioId = async () => {
+      // Verificar se há usuário logado
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user?.id) {
+        setUserId(session.user.id);
+        return;
+      }
+      
+      // Se não houver usuário logado, usar ID temporário de teste
+      let tempUserId = localStorage.getItem('temp_user_id');
+      if (!tempUserId) {
+        tempUserId = 'test-user-' + Date.now();
+        localStorage.setItem('temp_user_id', tempUserId);
+      }
+      setUserId(tempUserId);
+    };
+
+    getUsuarioId();
+  }, []);
 
   const { franchises, loading: loadingFranchises, setFranchises } = useFranchises(userId);
   const { favorites, loading: loadingFavorites, addFavorite, removeFavorite } = useFavorites(userId);
