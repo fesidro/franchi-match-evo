@@ -6,13 +6,26 @@ import { useMatchInteractions } from "@/hooks/useMatchInteractions";
 import { FranchiseCard } from "@/components/match/FranchiseCard";
 import { FavoritesList } from "@/components/match/FavoritesList";
 import { Card, CardContent } from "@/components/ui/card";
-import { Star } from "lucide-react";
+import { Star, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const Match = () => {
   const [userId] = useState<string | undefined>();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showResetDialog, setShowResetDialog] = useState(false);
 
   const { franchises, loading: loadingFranchises, setFranchises } = useFranchises(userId);
   const { favorites, loading: loadingFavorites, addFavorite, removeFavorite } = useFavorites(userId);
@@ -97,6 +110,43 @@ const Match = () => {
     await removeFavorite(favoritoId, franquiaId);
   };
 
+  const handleReset = async () => {
+    if (!userId) {
+      toast.error("Não foi possível resetar: usuário não identificado");
+      return;
+    }
+
+    try {
+      // Deletar todas as interações
+      const { error: interacoesError } = await supabase
+        .from("interacoes_match")
+        .delete()
+        .eq("usuario_id", userId);
+
+      if (interacoesError) throw interacoesError;
+
+      // Deletar todos os favoritos
+      const { error: favoritosError } = await supabase
+        .from("favoritos")
+        .delete()
+        .eq("usuario_id", userId);
+
+      if (favoritosError) throw favoritosError;
+
+      // Resetar estado
+      setCurrentIndex(0);
+      setShowResetDialog(false);
+      
+      // Recarregar a página para buscar franquias novamente
+      window.location.reload();
+      
+      toast.success("Teste resetado! Voltando ao início...");
+    } catch (error: any) {
+      console.error("Erro ao resetar:", error);
+      toast.error("Erro ao resetar teste");
+    }
+  };
+
   if (loadingFranchises || loadingFavorites) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -111,17 +161,21 @@ const Match = () => {
   if (franchises.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
-        <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-            <Link to="/" className="text-2xl font-bold text-gradient">
-              FranchiMatch
-            </Link>
-            {/* <Button variant="outline" onClick={handleLogout} className="gap-2">
-              <LogOut className="h-4 w-4" />
-              Sair
-            </Button> */}
-          </div>
-        </header>
+      <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link to="/" className="text-2xl font-bold text-gradient">
+            FranchiMatch
+          </Link>
+          <Button 
+            variant="outline" 
+            onClick={() => setShowResetDialog(true)} 
+            className="gap-2"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Resetar Teste
+          </Button>
+        </div>
+      </header>
         <div className="flex items-center justify-center min-h-[calc(100vh-100px)]">
           <Card className="max-w-md">
             <CardContent className="p-8 text-center space-y-4">
@@ -148,12 +202,31 @@ const Match = () => {
           <Link to="/" className="text-2xl font-bold text-gradient">
             FranchiMatch
           </Link>
-          {/* <Button variant="outline" onClick={handleLogout} className="gap-2">
-            <LogOut className="h-4 w-4" />
-            Sair
-          </Button> */}
+          <Button 
+            variant="outline" 
+            onClick={() => setShowResetDialog(true)} 
+            className="gap-2"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Resetar Teste
+          </Button>
         </div>
       </header>
+
+      <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Resetar teste?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem certeza que deseja resetar? Isso vai limpar todos os gostei, não gostei e favoritos.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleReset}>Sim, resetar</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-[1fr,320px] gap-8 max-w-7xl mx-auto">
