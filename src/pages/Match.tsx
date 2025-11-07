@@ -129,7 +129,7 @@ const Match = () => {
     }
   };
 
-  const handleRemoveFav = async (favoritoId: string, franquiaId: string) => {
+  const handleRemoveFav = async (favoritoId: number, franquiaId: string) => {
     await removeFavorite(favoritoId, franquiaId);
   };
 

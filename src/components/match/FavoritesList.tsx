@@ -3,16 +3,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Star, ArrowRight, Trash2 } from "lucide-react";
 
 interface Favorite {
-  favorito_id: string;
+  favorito_id: number;
   id: string;
   nome: string;
-  segmento: string;
+  segmento: string | null;
   logo_url: string | null;
 }
 
 interface FavoritesListProps {
   favorites: Favorite[];
-  onRemove: (favoritoId: string, franquiaId: string) => void;
+  onRemove: (favoritoId: number, franquiaId: string) => void;
 }
 
 export const FavoritesList = ({ favorites, onRemove }: FavoritesListProps) => {

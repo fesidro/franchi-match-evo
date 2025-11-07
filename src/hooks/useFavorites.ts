@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Franchise } from "./useFranchises";
 
 export interface Favorite extends Franchise {
-  favorito_id: string;
+  favorito_id: number;
 }
 
 export const useFavorites = (userId: string | undefined) => {
@@ -91,7 +91,7 @@ export const useFavorites = (userId: string | undefined) => {
     }
   };
 
-  const removeFavorite = async (favoritoId: string, franquiaId: string) => {
+  const removeFavorite = async (favoritoId: number, franquiaId: string) => {
     if (!userId) return;
 
     try {

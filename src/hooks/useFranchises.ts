@@ -5,29 +5,33 @@ import { toast } from "sonner";
 export interface Franchise {
   id: string;
   nome: string;
-  descricao: string | null;
-  segmento: string;
+  logo_url: string | null;
+  segmento: string | null;
   subsegmento: string | null;
-  investimento_minimo: number | null;
-  investimento_maximo: number | null;
   investimento: string | null;
-  payback_medio: number | null;
+  investimento_total: number | null;
+  taxa_franquia: string | null;
+  royalties: string | null;
+  royalties_percentual: number | null;
+  faturamento_medio: string | null;
+  faturamento_medio_mensal: number | null;
   payback_medio_meses: string | null;
   unidades_brasil: number | null;
   qtd_unidades: number | null;
-  logo_url: string | null;
+  idade_franquia_anos: number | null;
   selo_excelencia_abf: boolean | null;
-  faturamento_medio: string | null;
-  taxa_franquia: string | null;
-  royalties: string | null;
   nivel_satisfacao_franqueados: number | null;
   nivel_suporte_franquia: number | null;
   nivel_interesse_marca: string | null;
   nivel_interesse_franquia: string | null;
   nivel_dedicacao: string | null;
   publico_alvo: string | null;
+  pros: string[] | null;
   pros_resumido: string[] | null;
+  contras: string[] | null;
   contras_resumido: string[] | null;
+  ativo: boolean;
+  data_criacao: string;
 }
 
 export const useFranchises = (userId: string | undefined) => {
