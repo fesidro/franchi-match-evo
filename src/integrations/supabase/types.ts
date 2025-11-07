@@ -16,34 +16,34 @@ export type Database = {
     Tables: {
       compras_pacotes: {
         Row: {
-          created_at: string | null
-          data_compra: string | null
-          franquia_id: string
+          data_compra: string
+          data_entrega: string | null
+          franquia_id: string | null
           id: string
-          numero_pacote: number
-          pago: boolean | null
+          pacote: number
+          status: string
           usuario_id: string
-          valor: number | null
+          valor_pago: number | null
         }
         Insert: {
-          created_at?: string | null
-          data_compra?: string | null
-          franquia_id: string
+          data_compra?: string
+          data_entrega?: string | null
+          franquia_id?: string | null
           id?: string
-          numero_pacote: number
-          pago?: boolean | null
+          pacote: number
+          status?: string
           usuario_id: string
-          valor?: number | null
+          valor_pago?: number | null
         }
         Update: {
-          created_at?: string | null
-          data_compra?: string | null
-          franquia_id?: string
+          data_compra?: string
+          data_entrega?: string | null
+          franquia_id?: string | null
           id?: string
-          numero_pacote?: number
-          pago?: boolean | null
+          pacote?: number
+          status?: string
           usuario_id?: string
-          valor?: number | null
+          valor_pago?: number | null
         }
         Relationships: [
           {
@@ -53,31 +53,35 @@ export type Database = {
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "compras_pacotes_usuario_id_fkey"
+            columns: ["usuario_id"]
+            isOneToOne: false
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
+          },
         ]
       }
       favoritos: {
         Row: {
-          ativo: boolean | null
-          created_at: string | null
+          ativo: boolean
+          data_favoritado: string
           franquia_id: string
-          id: string
-          updated_at: string | null
+          id: number
           usuario_id: string
         }
         Insert: {
-          ativo?: boolean | null
-          created_at?: string | null
+          ativo?: boolean
+          data_favoritado?: string
           franquia_id: string
-          id?: string
-          updated_at?: string | null
+          id?: number
           usuario_id: string
         }
         Update: {
-          ativo?: boolean | null
-          created_at?: string | null
+          ativo?: boolean
+          data_favoritado?: string
           franquia_id?: string
-          id?: string
-          updated_at?: string | null
+          id?: number
           usuario_id?: string
         }
         Relationships: [
@@ -92,19 +96,15 @@ export type Database = {
       }
       franquias: {
         Row: {
-          ativo: boolean | null
+          ativo: boolean
           contras: string[] | null
           contras_resumido: string[] | null
-          created_at: string | null
-          data_atualizacao: string | null
-          descricao: string | null
+          data_criacao: string
           faturamento_medio: string | null
           faturamento_medio_mensal: number | null
           id: string
           idade_franquia_anos: number | null
           investimento: string | null
-          investimento_maximo: number | null
-          investimento_minimo: number | null
           investimento_total: number | null
           logo_url: string | null
           nivel_dedicacao: string | null
@@ -113,7 +113,6 @@ export type Database = {
           nivel_satisfacao_franqueados: number | null
           nivel_suporte_franquia: number | null
           nome: string
-          payback_medio: number | null
           payback_medio_meses: string | null
           pros: string[] | null
           pros_resumido: string[] | null
@@ -121,26 +120,22 @@ export type Database = {
           qtd_unidades: number | null
           royalties: string | null
           royalties_percentual: number | null
-          segmento: string
+          segmento: string | null
           selo_excelencia_abf: boolean | null
           subsegmento: string | null
           taxa_franquia: string | null
           unidades_brasil: number | null
         }
         Insert: {
-          ativo?: boolean | null
+          ativo?: boolean
           contras?: string[] | null
           contras_resumido?: string[] | null
-          created_at?: string | null
-          data_atualizacao?: string | null
-          descricao?: string | null
+          data_criacao?: string
           faturamento_medio?: string | null
           faturamento_medio_mensal?: number | null
           id?: string
           idade_franquia_anos?: number | null
           investimento?: string | null
-          investimento_maximo?: number | null
-          investimento_minimo?: number | null
           investimento_total?: number | null
           logo_url?: string | null
           nivel_dedicacao?: string | null
@@ -149,7 +144,6 @@ export type Database = {
           nivel_satisfacao_franqueados?: number | null
           nivel_suporte_franquia?: number | null
           nome: string
-          payback_medio?: number | null
           payback_medio_meses?: string | null
           pros?: string[] | null
           pros_resumido?: string[] | null
@@ -157,26 +151,22 @@ export type Database = {
           qtd_unidades?: number | null
           royalties?: string | null
           royalties_percentual?: number | null
-          segmento: string
+          segmento?: string | null
           selo_excelencia_abf?: boolean | null
           subsegmento?: string | null
           taxa_franquia?: string | null
           unidades_brasil?: number | null
         }
         Update: {
-          ativo?: boolean | null
+          ativo?: boolean
           contras?: string[] | null
           contras_resumido?: string[] | null
-          created_at?: string | null
-          data_atualizacao?: string | null
-          descricao?: string | null
+          data_criacao?: string
           faturamento_medio?: string | null
           faturamento_medio_mensal?: number | null
           id?: string
           idade_franquia_anos?: number | null
           investimento?: string | null
-          investimento_maximo?: number | null
-          investimento_minimo?: number | null
           investimento_total?: number | null
           logo_url?: string | null
           nivel_dedicacao?: string | null
@@ -185,7 +175,6 @@ export type Database = {
           nivel_satisfacao_franqueados?: number | null
           nivel_suporte_franquia?: number | null
           nome?: string
-          payback_medio?: number | null
           payback_medio_meses?: string | null
           pros?: string[] | null
           pros_resumido?: string[] | null
@@ -193,7 +182,7 @@ export type Database = {
           qtd_unidades?: number | null
           royalties?: string | null
           royalties_percentual?: number | null
-          segmento?: string
+          segmento?: string | null
           selo_excelencia_abf?: boolean | null
           subsegmento?: string | null
           taxa_franquia?: string | null
@@ -203,76 +192,64 @@ export type Database = {
       }
       franquias_detalhes_pacote2: {
         Row: {
-          analise_do_segmento: string | null
-          background_investimento: string | null
-          background_nivel_dedicacao: string | null
-          background_satisfacao_franqueados: string | null
-          background_suporte_franquia: string | null
-          capilaridade_regional: string | null
-          contras_detalhados: string[] | null
-          created_at: string | null
-          crescimento_anual_segmento: number | null
-          crescimento_unidades: number | null
-          experiencia_segmento: string | null
+          analise_crescimento: string | null
+          analise_macroeconomica: string | null
+          analise_satisfacao_qualitativa: string | null
+          contexto_dedicacao: string | null
+          contexto_suporte_detalhado: string | null
+          detalhes_investimento: Json | null
+          dificuldades_do_segmento: string | null
           expertise_necessaria: string | null
           franquia_id: string
           habilidades_chaves: string[] | null
+          historico_crescimento_unidades: Json | null
           id: string
-          idade_franquia: number | null
-          nivel_experiencia_segmento: string | null
-          pros_detalhados: string[] | null
-          unidades_2023: number | null
-          unidades_2024: number | null
+          persona_franqueado_ideal: string | null
+          persona_publico_alvo: string | null
+          principais_players_concorrentes: string | null
+          projecao_crescimento_segmento: string | null
         }
         Insert: {
-          analise_do_segmento?: string | null
-          background_investimento?: string | null
-          background_nivel_dedicacao?: string | null
-          background_satisfacao_franqueados?: string | null
-          background_suporte_franquia?: string | null
-          capilaridade_regional?: string | null
-          contras_detalhados?: string[] | null
-          created_at?: string | null
-          crescimento_anual_segmento?: number | null
-          crescimento_unidades?: number | null
-          experiencia_segmento?: string | null
+          analise_crescimento?: string | null
+          analise_macroeconomica?: string | null
+          analise_satisfacao_qualitativa?: string | null
+          contexto_dedicacao?: string | null
+          contexto_suporte_detalhado?: string | null
+          detalhes_investimento?: Json | null
+          dificuldades_do_segmento?: string | null
           expertise_necessaria?: string | null
           franquia_id: string
           habilidades_chaves?: string[] | null
+          historico_crescimento_unidades?: Json | null
           id?: string
-          idade_franquia?: number | null
-          nivel_experiencia_segmento?: string | null
-          pros_detalhados?: string[] | null
-          unidades_2023?: number | null
-          unidades_2024?: number | null
+          persona_franqueado_ideal?: string | null
+          persona_publico_alvo?: string | null
+          principais_players_concorrentes?: string | null
+          projecao_crescimento_segmento?: string | null
         }
         Update: {
-          analise_do_segmento?: string | null
-          background_investimento?: string | null
-          background_nivel_dedicacao?: string | null
-          background_satisfacao_franqueados?: string | null
-          background_suporte_franquia?: string | null
-          capilaridade_regional?: string | null
-          contras_detalhados?: string[] | null
-          created_at?: string | null
-          crescimento_anual_segmento?: number | null
-          crescimento_unidades?: number | null
-          experiencia_segmento?: string | null
+          analise_crescimento?: string | null
+          analise_macroeconomica?: string | null
+          analise_satisfacao_qualitativa?: string | null
+          contexto_dedicacao?: string | null
+          contexto_suporte_detalhado?: string | null
+          detalhes_investimento?: Json | null
+          dificuldades_do_segmento?: string | null
           expertise_necessaria?: string | null
           franquia_id?: string
           habilidades_chaves?: string[] | null
+          historico_crescimento_unidades?: Json | null
           id?: string
-          idade_franquia?: number | null
-          nivel_experiencia_segmento?: string | null
-          pros_detalhados?: string[] | null
-          unidades_2023?: number | null
-          unidades_2024?: number | null
+          persona_franqueado_ideal?: string | null
+          persona_publico_alvo?: string | null
+          principais_players_concorrentes?: string | null
+          projecao_crescimento_segmento?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "franquias_detalhes_pacote2_new_franquia_id_fkey"
+            foreignKeyName: "franquias_detalhes_pacote2_franquia_id_fkey"
             columns: ["franquia_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -280,40 +257,55 @@ export type Database = {
       }
       franquias_detalhes_pacote3: {
         Row: {
-          analise_mercado: string | null
-          created_at: string | null
+          analise_processos_judiciais: Json | null
+          cof_pegadinhas: string[] | null
+          cof_pontos_principais: string | null
+          cof_url: string | null
+          condicoes_repasse: string | null
+          condicoes_rescisao: string | null
           franquia_id: string
           id: string
-          pontos_fortes: string | null
-          pontos_fracos: string | null
-          potencial_retorno: string | null
-          riscos_identificados: string | null
+          modelo_negocio_segredos: string | null
+          ranking_confianca_classificacao: number | null
+          ranking_confianca_pontos_negativos: string[] | null
+          ranking_confianca_pontos_positivos: string[] | null
+          tempo_contrato: string | null
         }
         Insert: {
-          analise_mercado?: string | null
-          created_at?: string | null
+          analise_processos_judiciais?: Json | null
+          cof_pegadinhas?: string[] | null
+          cof_pontos_principais?: string | null
+          cof_url?: string | null
+          condicoes_repasse?: string | null
+          condicoes_rescisao?: string | null
           franquia_id: string
           id?: string
-          pontos_fortes?: string | null
-          pontos_fracos?: string | null
-          potencial_retorno?: string | null
-          riscos_identificados?: string | null
+          modelo_negocio_segredos?: string | null
+          ranking_confianca_classificacao?: number | null
+          ranking_confianca_pontos_negativos?: string[] | null
+          ranking_confianca_pontos_positivos?: string[] | null
+          tempo_contrato?: string | null
         }
         Update: {
-          analise_mercado?: string | null
-          created_at?: string | null
+          analise_processos_judiciais?: Json | null
+          cof_pegadinhas?: string[] | null
+          cof_pontos_principais?: string | null
+          cof_url?: string | null
+          condicoes_repasse?: string | null
+          condicoes_rescisao?: string | null
           franquia_id?: string
           id?: string
-          pontos_fortes?: string | null
-          pontos_fracos?: string | null
-          potencial_retorno?: string | null
-          riscos_identificados?: string | null
+          modelo_negocio_segredos?: string | null
+          ranking_confianca_classificacao?: number | null
+          ranking_confianca_pontos_negativos?: string[] | null
+          ranking_confianca_pontos_positivos?: string[] | null
+          tempo_contrato?: string | null
         }
         Relationships: [
           {
             foreignKeyName: "franquias_detalhes_pacote3_franquia_id_fkey"
             columns: ["franquia_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -321,37 +313,43 @@ export type Database = {
       }
       franquias_detalhes_pacote4: {
         Row: {
-          created_at: string | null
-          cronograma_implementacao: string | null
-          documentos_necessarios: string | null
-          estrategia_negociacao: string | null
+          analise_construcao_margem: Json | null
+          analise_demanda_real: Json | null
+          dre_cenarios: Json | null
           franquia_id: string
           id: string
-          suporte_pos_venda: string | null
+          mapa_cidade_perfil: Json | null
+          mapa_concorrentes: Json | null
+          pesquisa_valores_imobiliarios: Json | null
+          regiao_analise: string | null
         }
         Insert: {
-          created_at?: string | null
-          cronograma_implementacao?: string | null
-          documentos_necessarios?: string | null
-          estrategia_negociacao?: string | null
+          analise_construcao_margem?: Json | null
+          analise_demanda_real?: Json | null
+          dre_cenarios?: Json | null
           franquia_id: string
           id?: string
-          suporte_pos_venda?: string | null
+          mapa_cidade_perfil?: Json | null
+          mapa_concorrentes?: Json | null
+          pesquisa_valores_imobiliarios?: Json | null
+          regiao_analise?: string | null
         }
         Update: {
-          created_at?: string | null
-          cronograma_implementacao?: string | null
-          documentos_necessarios?: string | null
-          estrategia_negociacao?: string | null
+          analise_construcao_margem?: Json | null
+          analise_demanda_real?: Json | null
+          dre_cenarios?: Json | null
           franquia_id?: string
           id?: string
-          suporte_pos_venda?: string | null
+          mapa_cidade_perfil?: Json | null
+          mapa_concorrentes?: Json | null
+          pesquisa_valores_imobiliarios?: Json | null
+          regiao_analise?: string | null
         }
         Relationships: [
           {
             foreignKeyName: "franquias_detalhes_pacote4_franquia_id_fkey"
             columns: ["franquia_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "franquias"
             referencedColumns: ["id"]
           },
@@ -360,23 +358,23 @@ export type Database = {
       interacoes_match: {
         Row: {
           acao: string
-          created_at: string | null
+          data_acao: string
           franquia_id: string
-          id: string
+          id: number
           usuario_id: string
         }
         Insert: {
           acao: string
-          created_at?: string | null
+          data_acao?: string
           franquia_id: string
-          id?: string
+          id?: number
           usuario_id: string
         }
         Update: {
           acao?: string
-          created_at?: string | null
+          data_acao?: string
           franquia_id?: string
-          id?: string
+          id?: number
           usuario_id?: string
         }
         Relationships: [
@@ -388,6 +386,74 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      perfil_investidor: {
+        Row: {
+          background_profissional: string | null
+          dedicacao_desejada: string | null
+          id: string
+          investimento_disponivel: number | null
+          nivel_experiencia: string | null
+          tempo_para_abrir: string | null
+          usuario_id: string
+        }
+        Insert: {
+          background_profissional?: string | null
+          dedicacao_desejada?: string | null
+          id?: string
+          investimento_disponivel?: number | null
+          nivel_experiencia?: string | null
+          tempo_para_abrir?: string | null
+          usuario_id: string
+        }
+        Update: {
+          background_profissional?: string | null
+          dedicacao_desejada?: string | null
+          id?: string
+          investimento_disponivel?: number | null
+          nivel_experiencia?: string | null
+          tempo_para_abrir?: string | null
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "perfil_investidor_usuario_id_fkey"
+            columns: ["usuario_id"]
+            isOneToOne: false
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      usuarios: {
+        Row: {
+          aceite_termos: boolean
+          data_cadastro: string
+          email: string
+          id: string
+          nome_completo: string | null
+          perfil_completo: boolean
+          whatsapp: string | null
+        }
+        Insert: {
+          aceite_termos?: boolean
+          data_cadastro?: string
+          email: string
+          id?: string
+          nome_completo?: string | null
+          perfil_completo?: boolean
+          whatsapp?: string | null
+        }
+        Update: {
+          aceite_termos?: boolean
+          data_cadastro?: string
+          email?: string
+          id?: string
+          nome_completo?: string | null
+          perfil_completo?: boolean
+          whatsapp?: string | null
+        }
+        Relationships: []
       }
     }
     Views: {
