@@ -97,15 +97,11 @@ export type Database = {
       franquias: {
         Row: {
           ativo: boolean
-          contras: string[] | null
           contras_resumido: string[] | null
           data_criacao: string
           faturamento_medio: string | null
-          faturamento_medio_mensal: number | null
           id: string
-          idade_franquia_anos: number | null
           investimento: string | null
-          investimento_total: number | null
           logo_url: string | null
           nivel_dedicacao: string | null
           nivel_interesse_franquia: string | null
@@ -114,29 +110,22 @@ export type Database = {
           nivel_suporte_franquia: number | null
           nome: string
           payback_medio_meses: string | null
-          pros: string[] | null
           pros_resumido: string[] | null
           publico_alvo: string | null
-          qtd_unidades: number | null
+          qtd_unidades: string | null
           royalties: string | null
-          royalties_percentual: number | null
           segmento: string | null
           selo_excelencia_abf: boolean | null
           subsegmento: string | null
           taxa_franquia: string | null
-          unidades_brasil: number | null
         }
         Insert: {
           ativo?: boolean
-          contras?: string[] | null
           contras_resumido?: string[] | null
           data_criacao?: string
           faturamento_medio?: string | null
-          faturamento_medio_mensal?: number | null
           id?: string
-          idade_franquia_anos?: number | null
           investimento?: string | null
-          investimento_total?: number | null
           logo_url?: string | null
           nivel_dedicacao?: string | null
           nivel_interesse_franquia?: string | null
@@ -145,29 +134,22 @@ export type Database = {
           nivel_suporte_franquia?: number | null
           nome: string
           payback_medio_meses?: string | null
-          pros?: string[] | null
           pros_resumido?: string[] | null
           publico_alvo?: string | null
-          qtd_unidades?: number | null
+          qtd_unidades?: string | null
           royalties?: string | null
-          royalties_percentual?: number | null
           segmento?: string | null
           selo_excelencia_abf?: boolean | null
           subsegmento?: string | null
           taxa_franquia?: string | null
-          unidades_brasil?: number | null
         }
         Update: {
           ativo?: boolean
-          contras?: string[] | null
           contras_resumido?: string[] | null
           data_criacao?: string
           faturamento_medio?: string | null
-          faturamento_medio_mensal?: number | null
           id?: string
-          idade_franquia_anos?: number | null
           investimento?: string | null
-          investimento_total?: number | null
           logo_url?: string | null
           nivel_dedicacao?: string | null
           nivel_interesse_franquia?: string | null
@@ -176,17 +158,206 @@ export type Database = {
           nivel_suporte_franquia?: number | null
           nome?: string
           payback_medio_meses?: string | null
-          pros?: string[] | null
           pros_resumido?: string[] | null
           publico_alvo?: string | null
-          qtd_unidades?: number | null
+          qtd_unidades?: string | null
           royalties?: string | null
-          royalties_percentual?: number | null
           segmento?: string | null
           selo_excelencia_abf?: boolean | null
           subsegmento?: string | null
           taxa_franquia?: string | null
-          unidades_brasil?: number | null
+        }
+        Relationships: []
+      }
+      franquias_backup_antes_excluir: {
+        Row: {
+          ativo: boolean | null
+          contras: string[] | null
+          contras_resumido: string[] | null
+          data_criacao: string | null
+          faturamento_medio: string | null
+          faturamento_medio_mensal: string | null
+          id: string | null
+          idade_franquia_anos: string | null
+          investimento: string | null
+          investimento_total: string | null
+          logo_url: string | null
+          nivel_dedicacao: string | null
+          nivel_interesse_franquia: string | null
+          nivel_interesse_marca: string | null
+          nivel_satisfacao_franqueados: number | null
+          nivel_suporte_franquia: number | null
+          nome: string | null
+          payback_medio_meses: string | null
+          pros: string[] | null
+          pros_resumido: string[] | null
+          publico_alvo: string | null
+          qtd_unidades: string | null
+          royalties: string | null
+          royalties_percentual: string | null
+          segmento: string | null
+          selo_excelencia_abf: boolean | null
+          subsegmento: string | null
+          taxa_franquia: string | null
+          unidades_brasil: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          contras?: string[] | null
+          contras_resumido?: string[] | null
+          data_criacao?: string | null
+          faturamento_medio?: string | null
+          faturamento_medio_mensal?: string | null
+          id?: string | null
+          idade_franquia_anos?: string | null
+          investimento?: string | null
+          investimento_total?: string | null
+          logo_url?: string | null
+          nivel_dedicacao?: string | null
+          nivel_interesse_franquia?: string | null
+          nivel_interesse_marca?: string | null
+          nivel_satisfacao_franqueados?: number | null
+          nivel_suporte_franquia?: number | null
+          nome?: string | null
+          payback_medio_meses?: string | null
+          pros?: string[] | null
+          pros_resumido?: string[] | null
+          publico_alvo?: string | null
+          qtd_unidades?: string | null
+          royalties?: string | null
+          royalties_percentual?: string | null
+          segmento?: string | null
+          selo_excelencia_abf?: boolean | null
+          subsegmento?: string | null
+          taxa_franquia?: string | null
+          unidades_brasil?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          contras?: string[] | null
+          contras_resumido?: string[] | null
+          data_criacao?: string | null
+          faturamento_medio?: string | null
+          faturamento_medio_mensal?: string | null
+          id?: string | null
+          idade_franquia_anos?: string | null
+          investimento?: string | null
+          investimento_total?: string | null
+          logo_url?: string | null
+          nivel_dedicacao?: string | null
+          nivel_interesse_franquia?: string | null
+          nivel_interesse_marca?: string | null
+          nivel_satisfacao_franqueados?: number | null
+          nivel_suporte_franquia?: number | null
+          nome?: string | null
+          payback_medio_meses?: string | null
+          pros?: string[] | null
+          pros_resumido?: string[] | null
+          publico_alvo?: string | null
+          qtd_unidades?: string | null
+          royalties?: string | null
+          royalties_percentual?: string | null
+          segmento?: string | null
+          selo_excelencia_abf?: boolean | null
+          subsegmento?: string | null
+          taxa_franquia?: string | null
+          unidades_brasil?: string | null
+        }
+        Relationships: []
+      }
+      franquias_backup_antes_restauracao: {
+        Row: {
+          ativo: boolean | null
+          contras: string[] | null
+          contras_resumido: string[] | null
+          data_criacao: string | null
+          faturamento_medio: string | null
+          faturamento_medio_mensal: string | null
+          id: string | null
+          idade_franquia_anos: string | null
+          investimento: string | null
+          investimento_total: string | null
+          logo_url: string | null
+          nivel_dedicacao: string | null
+          nivel_interesse_franquia: string | null
+          nivel_interesse_marca: string | null
+          nivel_satisfacao_franqueados: number | null
+          nivel_suporte_franquia: number | null
+          nome: string | null
+          payback_medio_meses: string | null
+          pros: string[] | null
+          pros_resumido: string[] | null
+          publico_alvo: string | null
+          qtd_unidades: string | null
+          royalties: string | null
+          royalties_percentual: string | null
+          segmento: string | null
+          selo_excelencia_abf: boolean | null
+          subsegmento: string | null
+          taxa_franquia: string | null
+          unidades_brasil: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          contras?: string[] | null
+          contras_resumido?: string[] | null
+          data_criacao?: string | null
+          faturamento_medio?: string | null
+          faturamento_medio_mensal?: string | null
+          id?: string | null
+          idade_franquia_anos?: string | null
+          investimento?: string | null
+          investimento_total?: string | null
+          logo_url?: string | null
+          nivel_dedicacao?: string | null
+          nivel_interesse_franquia?: string | null
+          nivel_interesse_marca?: string | null
+          nivel_satisfacao_franqueados?: number | null
+          nivel_suporte_franquia?: number | null
+          nome?: string | null
+          payback_medio_meses?: string | null
+          pros?: string[] | null
+          pros_resumido?: string[] | null
+          publico_alvo?: string | null
+          qtd_unidades?: string | null
+          royalties?: string | null
+          royalties_percentual?: string | null
+          segmento?: string | null
+          selo_excelencia_abf?: boolean | null
+          subsegmento?: string | null
+          taxa_franquia?: string | null
+          unidades_brasil?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          contras?: string[] | null
+          contras_resumido?: string[] | null
+          data_criacao?: string | null
+          faturamento_medio?: string | null
+          faturamento_medio_mensal?: string | null
+          id?: string | null
+          idade_franquia_anos?: string | null
+          investimento?: string | null
+          investimento_total?: string | null
+          logo_url?: string | null
+          nivel_dedicacao?: string | null
+          nivel_interesse_franquia?: string | null
+          nivel_interesse_marca?: string | null
+          nivel_satisfacao_franqueados?: number | null
+          nivel_suporte_franquia?: number | null
+          nome?: string | null
+          payback_medio_meses?: string | null
+          pros?: string[] | null
+          pros_resumido?: string[] | null
+          publico_alvo?: string | null
+          qtd_unidades?: string | null
+          royalties?: string | null
+          royalties_percentual?: string | null
+          segmento?: string | null
+          selo_excelencia_abf?: boolean | null
+          subsegmento?: string | null
+          taxa_franquia?: string | null
+          unidades_brasil?: string | null
         }
         Relationships: []
       }

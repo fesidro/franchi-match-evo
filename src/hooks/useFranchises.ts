@@ -9,16 +9,11 @@ export interface Franchise {
   segmento: string | null;
   subsegmento: string | null;
   investimento: string | null;
-  investimento_total: number | null;
   taxa_franquia: string | null;
   royalties: string | null;
-  royalties_percentual: number | null;
   faturamento_medio: string | null;
-  faturamento_medio_mensal: number | null;
   payback_medio_meses: string | null;
-  unidades_brasil: number | null;
-  qtd_unidades: number | null;
-  idade_franquia_anos: number | null;
+  qtd_unidades: string | null;
   selo_excelencia_abf: boolean | null;
   nivel_satisfacao_franqueados: number | null;
   nivel_suporte_franquia: number | null;
@@ -26,9 +21,7 @@ export interface Franchise {
   nivel_interesse_franquia: string | null;
   nivel_dedicacao: string | null;
   publico_alvo: string | null;
-  pros: string[] | null;
   pros_resumido: string[] | null;
-  contras: string[] | null;
   contras_resumido: string[] | null;
   ativo: boolean;
   data_criacao: string;
