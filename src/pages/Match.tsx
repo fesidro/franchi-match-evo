@@ -257,10 +257,6 @@ const Match = () => {
         <div className="grid lg:grid-cols-[1fr,320px] gap-8 max-w-7xl mx-auto">
           {/* Main Card Area */}
           <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)]">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 text-gradient">
-              Encontre Sua Franquia Ideal
-            </h1>
-
             <FranchiseCard
               franchise={currentFranchise}
               onLike={handleLike}
