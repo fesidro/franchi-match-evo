@@ -70,7 +70,7 @@ export const FranchiseCard = ({ franchise, onLike, onDislike, onFavorite, isAnim
             <img
               src={franchise.logo_url}
               alt={franchise.nome}
-              className="w-32 h-32 object-contain rounded-lg shadow-lg bg-background p-4"
+              className="w-56 h-56 object-contain rounded-lg shadow-lg bg-background p-6"
             />
           ) : (
             <div className="w-32 h-32 bg-background rounded-lg shadow-lg flex items-center justify-center">
