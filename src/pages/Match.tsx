@@ -6,7 +6,7 @@ import { useMatchInteractions } from "@/hooks/useMatchInteractions";
 import { FranchiseCard } from "@/components/match/FranchiseCard";
 import { FavoritesList } from "@/components/match/FavoritesList";
 import { Card, CardContent } from "@/components/ui/card";
-import { Star, RotateCcw } from "lucide-react";
+import { Star, RotateCcw, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
@@ -257,16 +257,40 @@ const Match = () => {
         <div className="grid lg:grid-cols-[1fr,320px] gap-8 max-w-7xl mx-auto">
           {/* Main Card Area */}
           <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)]">
-            <FranchiseCard
-              franchise={currentFranchise}
-              onLike={handleLike}
-              onDislike={handleDislike}
-              onFavorite={handleFavorite}
-              isAnimating={isAnimating}
-            />
+            <div className="flex items-center gap-4">
+              {/* Seta Anterior */}
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setCurrentIndex(prev => prev > 0 ? prev - 1 : franchises.length - 1)}
+                className="h-12 w-12 rounded-full"
+                title="Card anterior"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </Button>
+
+              <FranchiseCard
+                franchise={currentFranchise}
+                onLike={handleLike}
+                onDislike={handleDislike}
+                onFavorite={handleFavorite}
+                isAnimating={isAnimating}
+              />
+
+              {/* Seta Próximo */}
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setCurrentIndex(prev => prev < franchises.length - 1 ? prev + 1 : 0)}
+                className="h-12 w-12 rounded-full"
+                title="Próximo card"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </Button>
+            </div>
 
             <p className="text-muted-foreground text-center mt-6 max-w-md">
-              Explore as opções de franquias e escolha as que mais combinam com seu perfil empreendedor
+              {currentIndex + 1} de {franchises.length} • Explore as franquias usando as setas ou os botões
             </p>
           </div>
 
