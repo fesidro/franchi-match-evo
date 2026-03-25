@@ -8,6 +8,7 @@ import Match from "./pages/Match";
 import Auth from "./pages/Auth";
 import AdminFranquias from "./pages/AdminFranquias";
 import NotFound from "./pages/NotFound";
+import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
