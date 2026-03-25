@@ -25,7 +25,6 @@ export function Carousel3D({ franchises }: Carousel3DProps) {
 
   const getCardStyle = (index: number) => {
     let diff = index - activeIndex;
-    // Wrap around
     if (diff > total / 2) diff -= total;
     if (diff < -total / 2) diff += total;
 
@@ -54,7 +53,6 @@ export function Carousel3D({ franchises }: Carousel3DProps) {
 
   return (
     <div className="relative flex flex-1 flex-col items-center justify-center">
-      {/* Carousel container */}
       <div className="relative flex h-[420px] w-full items-center justify-center" style={{ perspective: "1200px" }}>
         {franchises.map((f, i) => (
           <div
@@ -71,12 +69,11 @@ export function Carousel3D({ franchises }: Carousel3DProps) {
       <div className="mt-6 flex items-center gap-6">
         <button
           onClick={prev}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/20 bg-background/80 backdrop-blur-sm transition-smooth hover:border-gold/40 hover:shadow-md"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur-sm transition-smooth hover:border-primary/40 hover:shadow-md"
         >
-          <ChevronLeft className="h-4 w-4 text-gold-dark" />
+          <ChevronLeft className="h-4 w-4 text-primary" />
         </button>
 
-        {/* Dots */}
         <div className="flex items-center gap-2">
           {franchises.map((_, i) => (
             <button
@@ -84,8 +81,8 @@ export function Carousel3D({ franchises }: Carousel3DProps) {
               onClick={() => setActiveIndex(i)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 i === activeIndex
-                  ? "w-6 bg-gold"
-                  : "w-1.5 bg-gold/20 hover:bg-gold/40"
+                  ? "w-6 bg-primary"
+                  : "w-1.5 bg-primary/20 hover:bg-primary/40"
               }`}
             />
           ))}
@@ -93,9 +90,9 @@ export function Carousel3D({ franchises }: Carousel3DProps) {
 
         <button
           onClick={next}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/20 bg-background/80 backdrop-blur-sm transition-smooth hover:border-gold/40 hover:shadow-md"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur-sm transition-smooth hover:border-primary/40 hover:shadow-md"
         >
-          <ChevronRight className="h-4 w-4 text-gold-dark" />
+          <ChevronRight className="h-4 w-4 text-primary" />
         </button>
       </div>
     </div>

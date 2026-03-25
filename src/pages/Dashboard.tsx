@@ -20,15 +20,15 @@ export default function Dashboard() {
       {/* Subtle reflective floor gradient */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-muted/40 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(43_96%_56%_/_0.03)_0%,_transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(217_91%_35%_/_0.03)_0%,_transparent_70%)]" />
       </div>
 
       {/* Mobile menu button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="fixed top-5 left-5 z-50 flex h-10 w-10 items-center justify-center rounded-xl border border-gold/20 bg-background/80 backdrop-blur-md lg:hidden"
+        className="fixed top-5 left-5 z-50 flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background/80 backdrop-blur-md lg:hidden"
       >
-        <Menu className="h-5 w-5 text-gold-dark" />
+        <Menu className="h-5 w-5 text-primary" />
       </button>
 
       {/* Sidebar */}
@@ -39,20 +39,20 @@ export default function Dashboard() {
         {/* Header */}
         <header className="mb-8 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-gold-dark">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
               Área exclusiva
             </p>
-            <h1 className="mt-1 text-3xl font-light tracking-tight text-foreground md:text-4xl !text-3xl md:!text-4xl">
-              Área do <span className="font-semibold">Franqueado</span>
+            <h1 className="mt-1 text-3xl font-bold tracking-tight text-foreground md:text-4xl !text-3xl md:!text-4xl">
+              Área do <span className="text-primary">Franqueado</span>
             </h1>
           </div>
 
-          {/* Investor Profile - Premium minimalist panel */}
-          <div className="relative rounded-xl border border-gold/20 bg-background/60 px-6 py-4 backdrop-blur-sm">
-            <div className="absolute -top-px left-6 right-6 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
+          {/* Investor Profile */}
+          <div className="relative rounded-xl border border-border bg-background/60 px-6 py-4 backdrop-blur-sm">
+            <div className="absolute -top-px left-6 right-6 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
             <p className="text-sm font-semibold text-foreground">Alexandre Pereira</p>
             <div className="mt-2 flex flex-wrap gap-x-6 gap-y-1 text-xs text-muted-foreground">
-              <span>Capital Disponível: <strong className="text-gold-dark">R$ 150.000</strong></span>
+              <span>Capital Disponível: <strong className="text-primary">R$ 150.000</strong></span>
               <span>Dedicação: <strong className="text-foreground">Integral</strong></span>
             </div>
           </div>
@@ -60,8 +60,8 @@ export default function Dashboard() {
 
         {/* Section title */}
         <div className="mb-6 text-center">
-          <h2 className="text-xl font-light tracking-tight text-foreground !text-xl">
-            Meus <span className="font-semibold">Matches</span>
+          <h2 className="text-xl font-bold tracking-tight text-foreground !text-xl">
+            Meus <span className="text-primary">Matches</span>
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Franquias que combinam com o seu perfil. Analise os riscos antes de investir.

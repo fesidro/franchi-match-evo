@@ -28,16 +28,16 @@ export function DashboardSidebar({ open, onClose }: DashboardSidebarProps) {
       <aside
         className={`
           fixed left-4 top-4 bottom-4 z-50 w-56 flex flex-col
-          rounded-2xl border border-gold/15
+          rounded-2xl border border-border
           bg-background/70 backdrop-blur-xl
-          shadow-[0_8px_32px_hsl(43_96%_56%_/_0.08)]
+          shadow-[0_8px_32px_hsl(217_91%_35%_/_0.08)]
           transition-transform duration-300 ease-out
           lg:translate-x-0
           ${open ? "translate-x-0" : "-translate-x-[calc(100%+2rem)]"}
         `}
       >
-        {/* Gold top accent */}
-        <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
+        {/* Blue top accent */}
+        <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
 
         {/* Close button (mobile) */}
         <button
@@ -53,7 +53,7 @@ export function DashboardSidebar({ open, onClose }: DashboardSidebarProps) {
         </div>
 
         {/* Divider */}
-        <div className="mx-6 h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+        <div className="mx-6 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
         {/* Navigation */}
         <nav className="flex-1 space-y-1 px-3 pt-6">
@@ -62,9 +62,9 @@ export function DashboardSidebar({ open, onClose }: DashboardSidebarProps) {
               key={item.title}
               to={item.url}
               onClick={onClose}
-              className="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground/80 transition-smooth hover:bg-gold/5 hover:text-foreground"
+              className="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-foreground/80 transition-smooth hover:bg-primary/5 hover:text-foreground"
             >
-              <item.icon className="h-4 w-4 text-gold-dark transition-smooth group-hover:text-gold" />
+              <item.icon className="h-4 w-4 text-primary transition-smooth group-hover:text-primary-light" />
               <span>{item.title}</span>
             </Link>
           ))}
@@ -72,7 +72,7 @@ export function DashboardSidebar({ open, onClose }: DashboardSidebarProps) {
 
         {/* Footer */}
         <div className="px-6 pb-6 pt-4">
-          <div className="mx-auto h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent mb-4" />
+          <div className="mx-auto h-px bg-gradient-to-r from-transparent via-border to-transparent mb-4" />
           <p className="text-center text-[10px] text-muted-foreground/60">
             © 2026 franchiMatch
           </p>
