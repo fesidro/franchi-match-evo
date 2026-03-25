@@ -1,70 +1,76 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { useState } from "react";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
-import { ProfileSummary } from "@/components/dashboard/ProfileSummary";
-import { FranchiseMatchCard } from "@/components/dashboard/FranchiseMatchCard";
-import { Search } from "lucide-react";
+import { Carousel3D } from "@/components/dashboard/Carousel3D";
+import { Menu } from "lucide-react";
 
 const mockFranchises = [
-  { name: "Cresci e Perdi", segment: "Alimentação", investment: "R$ 120.000", rating: 4, units: "380" },
-  { name: "CleanPro", segment: "Serviços", investment: "R$ 85.000", rating: 5, units: "210" },
-  { name: "TechFix", segment: "Tecnologia", investment: "R$ 95.000", rating: 4, units: "150" },
-  { name: "PetAmigo", segment: "Pet Shop", investment: "R$ 110.000", rating: 3, units: "420" },
-  { name: "EduPlus", segment: "Educação", investment: "R$ 200.000", rating: 5, units: "95" },
-  { name: "FitZone", segment: "Saúde e Bem-estar", investment: "R$ 180.000", rating: 4, units: "270" },
+  { name: "Cresci e Perdi", segment: "Alimentação", investment: "R$ 120.000", rating: 4, units: "380", royalties: "5%" },
+  { name: "CleanPro", segment: "Serviços", investment: "R$ 85.000", rating: 5, units: "210", royalties: "6%" },
+  { name: "TechFix", segment: "Tecnologia", investment: "R$ 95.000", rating: 4, units: "150", royalties: "4%" },
+  { name: "PetAmigo", segment: "Pet Shop", investment: "R$ 110.000", rating: 3, units: "420", royalties: "5.5%" },
+  { name: "EduPlus", segment: "Educação", investment: "R$ 200.000", rating: 5, units: "95", royalties: "7%" },
+  { name: "FitZone", segment: "Saúde e Bem-estar", investment: "R$ 180.000", rating: 4, units: "270", royalties: "6%" },
 ];
 
 export default function Dashboard() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-muted/30">
-        <DashboardSidebar />
-
-        <div className="flex-1 flex flex-col min-w-0">
-          {/* Top bar */}
-          <header className="sticky top-0 z-10 h-14 flex items-center gap-4 border-b border-border bg-card/80 backdrop-blur-sm px-4 md:px-6">
-            <SidebarTrigger className="shrink-0" />
-            <h1 className="text-base font-semibold text-foreground !text-base">
-              Visão Geral do seu Perfil
-            </h1>
-
-            <div className="ml-auto flex items-center gap-3">
-              <div className="relative hidden sm:block">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Buscar franquias..."
-                  className="h-9 w-56 rounded-md border border-input bg-background pl-9 pr-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                />
-              </div>
-              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-semibold">
-                JP
-              </div>
-            </div>
-          </header>
-
-          {/* Main content */}
-          <main className="flex-1 p-4 md:p-6 lg:p-8 space-y-8">
-            {/* Profile summary badges */}
-            <ProfileSummary />
-
-            {/* Matches section */}
-            <section className="space-y-4">
-              <div>
-                <h2 className="text-2xl font-bold text-foreground !text-2xl">Meus Matches</h2>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Franquias que combinam com o seu perfil. Analise os riscos antes de investir.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                {mockFranchises.map((f) => (
-                  <FranchiseMatchCard key={f.name} {...f} />
-                ))}
-              </div>
-            </section>
-          </main>
-        </div>
+    <div className="relative min-h-screen w-full overflow-hidden bg-background">
+      {/* Subtle reflective floor gradient */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-muted/40 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(43_96%_56%_/_0.03)_0%,_transparent_70%)]" />
       </div>
-    </SidebarProvider>
+
+      {/* Mobile menu button */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="fixed top-5 left-5 z-50 flex h-10 w-10 items-center justify-center rounded-xl border border-gold/20 bg-background/80 backdrop-blur-md lg:hidden"
+      >
+        <Menu className="h-5 w-5 text-gold-dark" />
+      </button>
+
+      {/* Sidebar */}
+      <DashboardSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+      {/* Main Content */}
+      <main className="relative z-10 flex min-h-screen flex-col px-4 pb-12 pt-20 lg:pl-72 lg:pr-8 lg:pt-8">
+        {/* Header */}
+        <header className="mb-8 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-gold-dark">
+              Área exclusiva
+            </p>
+            <h1 className="mt-1 text-3xl font-light tracking-tight text-foreground md:text-4xl !text-3xl md:!text-4xl">
+              Área do <span className="font-semibold">Franqueado</span>
+            </h1>
+          </div>
+
+          {/* Investor Profile - Premium minimalist panel */}
+          <div className="relative rounded-xl border border-gold/20 bg-background/60 px-6 py-4 backdrop-blur-sm">
+            <div className="absolute -top-px left-6 right-6 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
+            <p className="text-sm font-semibold text-foreground">Alexandre Pereira</p>
+            <div className="mt-2 flex flex-wrap gap-x-6 gap-y-1 text-xs text-muted-foreground">
+              <span>Capital Disponível: <strong className="text-gold-dark">R$ 150.000</strong></span>
+              <span>Dedicação: <strong className="text-foreground">Integral</strong></span>
+            </div>
+          </div>
+        </header>
+
+        {/* Section title */}
+        <div className="mb-6 text-center">
+          <h2 className="text-xl font-light tracking-tight text-foreground !text-xl">
+            Meus <span className="font-semibold">Matches</span>
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Franquias que combinam com o seu perfil. Analise os riscos antes de investir.
+          </p>
+        </div>
+
+        {/* 3D Carousel */}
+        <Carousel3D franchises={mockFranchises} />
+      </main>
+    </div>
   );
 }
