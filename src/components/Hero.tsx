@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import logo from "@/assets/logo.svg";
 
 const Hero = () => {
   return (
@@ -9,6 +10,7 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           {/* Content */}
           <div className="space-y-8 animate-fade-in text-center lg:text-left">
+            <img src={logo} alt="FranchiMatch" className="h-12 md:h-16 mx-auto lg:mx-0" />
             <h1 className="text-gradient">
               Da decisão ao sucesso — sua franquia começa aqui.
             </h1>
