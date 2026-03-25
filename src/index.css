@@ -57,6 +57,12 @@ All colors MUST be HSL.
     --shadow-primary: 0 10px 30px -10px hsl(217 91% 35% / 0.3);
     --shadow-secondary: 0 10px 30px -10px hsl(25 95% 53% / 0.3);
     
+    /* Gold / Premium tokens */
+    --gold: 43 96% 56%;
+    --gold-dark: 40 90% 42%;
+    --gold-light: 45 100% 72%;
+    --gold-foreground: 0 0% 100%;
+
     /* Transitions */
     --transition-base: all 0.2s ease;
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
