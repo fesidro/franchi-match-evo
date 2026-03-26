@@ -10,6 +10,7 @@ import Auth from "./pages/Auth";
 import AdminFranquias from "./pages/AdminFranquias";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
+import Consultoria from "./pages/Consultoria";
 
 const queryClient = new QueryClient();
 
