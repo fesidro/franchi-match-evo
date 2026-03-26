@@ -67,8 +67,8 @@ export default function Checkout() {
               <p className="text-sm font-semibold text-foreground">O que você vai receber:</p>
               {deliverables.map((item) => (
                 <div key={item} className="flex items-start gap-3">
-                  <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/30">
-                    <Check className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
+                  <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                    <Check className="h-3 w-3 text-primary" />
                   </div>
                   <p className="text-sm text-foreground/80">{item}</p>
                 </div>
